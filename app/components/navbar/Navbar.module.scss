@@ -1,0 +1,139 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  backdrop-filter: blur(18px);
+  background: rgba(255, 247, 251, 0.92);
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0.85rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.logoIcon {
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--color-pink), var(--color-purple));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-soft);
+  color: var(--color-white);
+  font-size: 1rem;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+}
+
+.brandName {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.tagline {
+  font-size: 0.72rem;
+  color: var(--color-muted);
+}
+
+.navLinks {
+  display: none;
+  gap: 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.iconButton {
+  position: relative;
+  padding: 0.45rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: var(--shadow-soft);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast),
+    border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.iconButton svg {
+  font-size: 0.95rem;
+  color: var(--color-purple);
+}
+
+.iconButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px rgba(180, 147, 255, 0.25);
+  border-color: rgba(180, 147, 255, 0.35);
+  background: #ffffff;
+}
+
+.cartBadge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(35%, -35%);
+  min-width: 17px;
+  height: 17px;
+  border-radius: 999px;
+  background: #ff7aa2;
+  color: #ffffff;
+  font-size: 0.65rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Desktop nav links */
+@media (min-width: 768px) {
+  .inner {
+    padding: 0.9rem 1.5rem;
+  }
+
+  .navLinks {
+    display: flex;
+  }
+
+  .navLinks a {
+    position: relative;
+    padding-bottom: 0.1rem;
+  }
+
+  .navLinks a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -0.2rem;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-pink), var(--color-purple));
+    transition: width 0.18s ease-out;
+    border-radius: 999px;
+  }
+
+  .navLinks a:hover::after {
+    width: 100%;
+  }
+}

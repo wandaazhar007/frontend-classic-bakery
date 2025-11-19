@@ -1,0 +1,79 @@
+.footerWrapper {
+  border-top: 1px solid var(--color-border-soft);
+  background: linear-gradient(180deg,
+      rgba(255, 247, 251, 0.95),
+      rgba(244, 231, 255, 0.98));
+}
+
+.footer {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 1.75rem 1.25rem 2.25rem;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.topRow {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.brandBlock {
+  max-width: 260px;
+}
+
+.brandName {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: var(--color-text);
+}
+
+.tagline {
+  margin: 0;
+}
+
+.columns {
+  display: flex;
+  gap: 2.5rem;
+}
+
+.columns h4 {
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+  color: var(--color-text);
+}
+
+.columns ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.columns li+li {
+  margin-top: 0.18rem;
+}
+
+.bottomRow {
+  border-top: 1px dashed rgba(180, 147, 255, 0.35);
+  padding-top: 0.9rem;
+  font-size: 0.78rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  row-gap: 0.4rem;
+}
+
+@media (min-width: 768px) {
+  .footer {
+    padding: 2rem 1.5rem 2.5rem;
+  }
+
+  .topRow {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
