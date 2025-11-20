@@ -14,8 +14,7 @@ import styles from "./Navbar.module.scss";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
-  { href: "/products", label: "Menu Bolu" },
-  { href: "/gallery", label: "Gallery" },
+  { href: "/products", label: "Menu" },
   { href: "/about", label: "Tentang Kami" },
   { href: "/contact", label: "Kontak" },
 ];
