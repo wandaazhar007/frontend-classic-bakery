@@ -1,6 +1,5 @@
-/* app/globals.scss */
+@use "./styles/variables" as *;
 
-/* ===== CSS RESET (light) ===== */
 *,
 *::before,
 *::after {
@@ -13,86 +12,84 @@ body {
   margin: 0;
 }
 
-/* ===== THEME VARIABLES ===== */
-:root {
-  --color-pink: #ffc1dc;
-  --color-purple: #b493ff;
-  --color-white: #ffffff;
-  --color-bg: #fff7fb;
-  --color-text: #3a3144;
-  --color-muted: #8b7a9b;
-  --color-border-soft: #f0e3ff;
-  --shadow-soft: 0 10px 30px rgba(180, 147, 255, 0.18);
-  --radius-lg: 18px;
-  --radius-xl: 28px;
-  --transition-fast: 0.2s ease-out;
-}
+// body a {
+//   text-decoration: none;
+//   cursor: pointer;
+// }
 
 body {
-  background: radial-gradient(circle at top left, #ffe5f2 0, #fff7fb 38%, #f7eeff 100%);
-  color: var(--color-text);
-  min-height: 100vh;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Poppins",
+    "Nunito", sans-serif;
+  background: radial-gradient(circle at top left, $color-pink-soft 0, $color-cream 40%, $color-white 80%);
+  color: $color-text-main;
 }
 
-/* Smooth scroll & font rendering */
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  -webkit-font-smoothing: antialiased;
-}
-
-/* ===== GLOBAL UTILITY CLASSES ===== */
-
-.main-container {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 1.5rem 1.25rem;
-}
-
-@media (min-width: 768px) {
-  .main-container {
-    padding: 2rem 1.5rem 3rem;
-  }
-}
-
-.page-wrapper {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.page-main {
-  flex: 1 0 auto;
-  padding-top: 4.5rem; // space for navbar
-}
-
-.page-footer {
-  flex-shrink: 0;
-}
-
-/* Simple button reset for future custom buttons */
-button {
-  font: inherit;
-  border: none;
-  cursor: pointer;
-  background: none;
-}
-
-/* Links */
 a {
   color: inherit;
   text-decoration: none;
 }
 
-a:hover {
-  text-decoration: none;
+img {
+  max-width: 100%;
+  display: block;
 }
 
-/* Form inputs base */
-input,
-textarea,
-select {
-  font: inherit;
+button {
+  font-family: inherit;
+}
+
+.main-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+}
+
+/* Section utility */
+.section {
+  padding: 3.5rem 1.5rem;
+
+  @media (min-width: $bp-md) {
+    padding: 4.5rem 1.5rem;
+  }
+}
+
+.section-inner {
+  max-width: $max-width;
+  margin: 0 auto;
+}
+
+/* Headings */
+.section-heading {
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.section-subheading {
+  font-size: 0.95rem;
+  color: $color-text-muted;
+  max-width: 540px;
+}
+
+/* Simple badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.15rem 0.8rem;
+  border-radius: $radius-pill;
+  background: rgba($color-purple, 0.08);
+  color: $color-purple;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+button,
+[role="button"],
+a[href] {
+  cursor: pointer;
 }

@@ -1,68 +1,41 @@
-// app/layout.tsx
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
 import "./globals.scss";
-
-import "@fortawesome/fontawesome-svg-core/styles.css";
-import { config } from "@fortawesome/fontawesome-svg-core";
-config.autoAddCss = false;
-
-import { RootProviders } from "./context/RootProviders";
-// import Navbar from "/components/navbar/Navbar";
-// import Footer from "/components/footer/Footer";
-// import Navbar from "/components/navbar/Navbar";
-// import Footer from "/components/footer/Footer";
+import { ReactNode } from "react";
 import Navbar from "./components/navbar/Navbar";
-import Footer from "./components/footer/Footer";
+import { Footer } from "./components/footer/Footer";
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-poppins",
-});
+// export const metadata: Metadata = {
+//   title: "Classic Bakery | Premium & Affordable Bolu",
+//   description:
+//     "Order premium yet affordable bolu and bakery products from Classic Bakery with a cheerful pastel experience.",
+// };
 
 export const metadata: Metadata = {
-  title: "Classic Bakery | Bahan premium yang tulus dari hati",
+  title: "Classic Bakery | Premium & Affordable Bolu Cakes",
   description:
-    "Classic Bakery menghadirkan bolu jadul, bolu kukus, dan premium gift cake dengan bahan premium, rasa rumahan, dan harga terjangkau.",
-  metadataBase: new URL("https://classicbakery.com"),
+    "Classic Bakery – premium yet affordable bolu and bakery products with a cheerful pastel aesthetic. Order online for pickup or delivery.",
+  icons: {
+    icon: "/favicon.ico",
+  },
   openGraph: {
-    title: "Classic Bakery | Bahan premium yang tulus dari hati",
+    title: "Classic Bakery",
     description:
-      "Bolu jadul, bolu kukus, dan premium gift cake dengan bahan premium dan rasa hangat rumahan.",
+      "Order premium & affordable bolu cakes, gift boxes, and bakery treats online.",
     url: "https://classicbakery.com",
     siteName: "Classic Bakery",
     type: "website",
   },
-  icons: {
-    icon: "/favicon.ico",
-  },
 };
 
-type RootLayoutProps = {
-  children: React.ReactNode;
-};
-
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="id">
-      <body className={poppins.className}>
-        <RootProviders>
-          <div className="page-wrapper">
-            {/* Global Navbar */}
-            <Navbar />
-
-            {/* Main content */}
-            <main className="page-main">
-              <div className="main-container">{children}</div>
-            </main>
-
-            {/* Global Footer */}
-            <footer className="page-footer">
-              <Footer />
-            </footer>
-          </div>
-        </RootProviders>
+    <html lang="en">
+      <body>
+        <div className="main-wrapper">
+          <Navbar />
+          <main className="main-content">{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

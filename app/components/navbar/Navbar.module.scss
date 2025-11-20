@@ -1,39 +1,42 @@
+@use "../../styles/variables" as *;
+
 .navbar {
   position: sticky;
   top: 0;
   z-index: 40;
-  backdrop-filter: blur(18px);
-  background: rgba(255, 247, 251, 0.92);
-  border-bottom: 1px solid var(--color-border-soft);
+  backdrop-filter: blur(16px);
+  background: rgba($color-cream, 0.94);
+  border-bottom: 1px solid rgba($color-border-soft, 0.9);
 }
 
 .inner {
-  max-width: 1120px;
+  max-width: $max-width;
   margin: 0 auto;
-  padding: 0.85rem 1.25rem;
+  height: $header-height;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
+  padding: 0 1.25rem;
 }
+
+/* Brand */
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.7rem;
+  text-decoration: none;
 }
 
-.logoIcon {
-  width: 38px;
-  height: 38px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, var(--color-pink), var(--color-purple));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-soft);
-  color: var(--color-white);
-  font-size: 1rem;
+.logoWrapper {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: $shadow-soft;
+  background: $color-white;
+  // 7c6f8f
 }
 
 .brandText {
@@ -42,98 +45,233 @@
 }
 
 .brandName {
-  font-size: 1.05rem;
-  font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: $color-text-main;
 }
 
-.tagline {
-  font-size: 0.72rem;
-  color: var(--color-muted);
+.brandTagline {
+  font-size: 0.75rem;
+  color: $color-text-muted;
 }
+
+/* Desktop nav */
 
 .navLinks {
   display: none;
-  gap: 1.4rem;
+  align-items: center;
+  gap: 1.2rem;
   font-size: 0.9rem;
-  font-weight: 500;
-}
 
-.actions {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.iconButton {
-  position: relative;
-  padding: 0.45rem 0.65rem;
-  border-radius: 999px;
-  border: 1px solid transparent;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: var(--shadow-soft);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast),
-    border-color var(--transition-fast), background var(--transition-fast);
-}
-
-.iconButton svg {
-  font-size: 0.95rem;
-  color: var(--color-purple);
-}
-
-.iconButton:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 28px rgba(180, 147, 255, 0.25);
-  border-color: rgba(180, 147, 255, 0.35);
-  background: #ffffff;
-}
-
-.cartBadge {
-  position: absolute;
-  top: 0;
-  right: 0;
-  transform: translate(35%, -35%);
-  min-width: 17px;
-  height: 17px;
-  border-radius: 999px;
-  background: #ff7aa2;
-  color: #ffffff;
-  font-size: 0.65rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Desktop nav links */
-@media (min-width: 768px) {
-  .inner {
-    padding: 0.9rem 1.5rem;
-  }
-
-  .navLinks {
+  @media (min-width: $bp-md) {
     display: flex;
   }
+}
 
-  .navLinks a {
-    position: relative;
-    padding-bottom: 0.1rem;
-  }
+.navLink {
+  position: relative;
+  padding: 0.2rem 0;
+  cursor: pointer;
+  color: $color-text-main;
 
-  .navLinks a::after {
+  &::after {
     content: "";
     position: absolute;
     left: 0;
-    bottom: -0.2rem;
+    bottom: -0.15rem;
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, var(--color-pink), var(--color-purple));
-    transition: width 0.18s ease-out;
     border-radius: 999px;
+    background: linear-gradient(90deg, $color-pink, $color-purple);
+    transition: width 0.2s ease-out;
   }
 
-  .navLinks a:hover::after {
+  &:hover::after {
     width: 100%;
+  }
+}
+
+/* Desktop actions */
+
+.actionsDesktop {
+  display: none;
+  align-items: center;
+  gap: 0.75rem;
+
+  @media (min-width: $bp-md) {
+    display: flex;
+  }
+}
+
+.cartBtn {
+  border-radius: $radius-pill;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid $color-border-soft;
+  background: rgba($color-white, 0.9);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  transition: box-shadow 0.15s ease-out, transform 0.15s ease-out;
+  color: $color-text-main;
+
+  &:hover {
+    box-shadow: $shadow-soft;
+    transform: translateY(-1px);
+  }
+}
+
+.primaryBtn {
+  border-radius: $radius-pill;
+  padding: 0.55rem 1.1rem;
+  border: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(135deg, $color-pink, $color-purple);
+  color: $color-white;
+  box-shadow: $shadow-soft;
+}
+
+/* Mobile actions */
+
+.actionsMobile {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  @media (min-width: $bp-md) {
+    display: none;
+  }
+}
+
+.iconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid $color-border-soft;
+  background: rgba($color-white, 0.96);
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+}
+
+/* User dropdown (mobile) */
+
+.userDropdown {
+  @media (min-width: $bp-md) {
+    display: none;
+  }
+
+  position: absolute;
+  right: 1.25rem;
+  top: calc($header-height + 0.4rem);
+  z-index: 45;
+  background: $color-white;
+  border-radius: $radius-md;
+  box-shadow: $shadow-soft;
+  padding: 0.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.userDropdownItem {
+  border: none;
+  background: transparent;
+  padding: 0.4rem 0.7rem;
+  border-radius: 0.6rem;
+  text-align: left;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: $color-text-main;
+  width: 100%;
+
+  span {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &:hover {
+    background: $color-pink-soft;
+  }
+}
+
+/* Sidebar overlay & panel */
+
+.sidebarOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  opacity: 0;
+  pointer-events: none;
+  transition: background 0.2s ease-out, opacity 0.2s ease-out;
+  z-index: 35;
+
+  @media (min-width: $bp-md) {
+    display: none;
+  }
+}
+
+.sidebarOverlayVisible {
+  background: rgba(0, 0, 0, 0.25);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(260px, 75vw);
+  height: 100vh;
+  background: $color-cream;
+  box-shadow: -12px 0 30px rgba(0, 0, 0, 0.08);
+  transform: translateX(100%);
+  transition: transform 0.25s ease-out;
+  z-index: 50;
+  padding: 1.3rem 1rem 1rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  @media (min-width: $bp-md) {
+    display: none;
+  }
+}
+
+.sidebarOpen {
+  transform: translateX(0);
+}
+
+.sidebarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.9rem;
+}
+
+.sidebarTitle {
+  font-weight: 600;
+}
+
+.sidebarNav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.sidebarLink {
+  padding: 0.55rem 0.6rem;
+  border-radius: 0.6rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+
+  &:hover {
+    background: $color-pink-soft;
   }
 }

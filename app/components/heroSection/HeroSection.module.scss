@@ -1,0 +1,112 @@
+@use "../../styles/variables" as *;
+
+.hero {
+  padding: 3.5rem 1.5rem 3rem;
+
+  @media (min-width: $bp-md) {
+    padding: 4rem 1.5rem 3.5rem;
+  }
+}
+
+.heroInner {
+  max-width: $max-width;
+  margin: 0 auto;
+  display: grid;
+  gap: 2.5rem;
+
+  @media (min-width: $bp-md) {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    align-items: center;
+  }
+}
+
+.heroText {
+  max-width: 520px;
+}
+
+.heroBadge {
+  margin-bottom: 0.6rem;
+}
+
+.heroTitle {
+  font-size: 2.2rem;
+  line-height: 1.15;
+  margin: 0.9rem 0 0.75rem;
+
+  @media (min-width: $bp-md) {
+    font-size: 2.6rem;
+  }
+}
+
+.heroSubtitle {
+  font-size: 0.95rem;
+  color: $color-text-muted;
+  margin-bottom: 1.4rem;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+}
+
+.ctaPrimary,
+.ctaSecondary {
+  border-radius: $radius-pill;
+  padding: 0.8rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+.ctaPrimary {
+  background: linear-gradient(135deg, $color-pink, $color-purple);
+  color: $color-white;
+  box-shadow: $shadow-soft;
+}
+
+.ctaSecondary {
+  background: rgba($color-white, 0.92);
+  border: 1px solid $color-border-soft;
+}
+
+.heroNote {
+  font-size: 0.8rem;
+  color: $color-text-muted;
+}
+
+.heroVisual {
+  display: flex;
+  justify-content: center;
+}
+
+.heroCard {
+  background: $color-white;
+  border-radius: $radius-lg;
+  padding: 1.1rem;
+  box-shadow: $shadow-soft;
+  max-width: 360px;
+}
+
+.heroCardInfo {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-size: 0.85rem;
+
+  span:first-child {
+    color: $color-purple;
+    font-weight: 600;
+  }
+
+  strong {
+    font-size: 1rem;
+  }
+
+  span:last-child {
+    color: $color-text-muted;
+  }
+}

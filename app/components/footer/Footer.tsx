@@ -1,44 +1,45 @@
-import React from "react";
+import Link from "next/link";
 import styles from "./Footer.module.scss";
 
-const Footer: React.FC = () => {
-  const year = new Date().getFullYear();
-
+export function Footer() {
   return (
-    <div className={styles.footerWrapper}>
-      <footer className={styles.footer}>
+    <footer className={styles.footer}>
+      <div className={styles.inner}>
         <div className={styles.topRow}>
           <div className={styles.brandBlock}>
             <div className={styles.brandName}>Classic Bakery</div>
-            <p className={styles.tagline}>Bolu lembut, rasa rumahan, siap jadi hadiah manis.</p>
+            <p className={styles.brandText}>
+              Bolu jadul, bolu kukus, dan premium gift bolu dengan rasa hangat
+              rumahan, dikemas manis untuk setiap momen spesial.
+            </p>
           </div>
 
-          <div className={styles.columns}>
-            <div>
-              <h4>Menu</h4>
-              <ul>
-                <li>Produk</li>
-                <li>Galeri</li>
-                <li>Testimoni</li>
-              </ul>
+          <div>
+            <div className={styles.columnTitle}>Menu</div>
+            <div className={styles.linkList}>
+              <Link href="/products?category=bolu-jadul">Bolu Jadul</Link>
+              <Link href="/products?category=bolu-kukus">Bolu Kukus</Link>
+              <Link href="/products?category=premium-gift">
+                Premium Gift Bolu
+              </Link>
             </div>
-            <div>
-              <h4>Bantuan</h4>
-              <ul>
-                <li>Cara pesan</li>
-                <li>Pengiriman</li>
-                <li>Kontak</li>
-              </ul>
+          </div>
+
+          <div>
+            <div className={styles.columnTitle}>Bantuan</div>
+            <div className={styles.linkList}>
+              <Link href="/faq">FAQ</Link>
+              <Link href="/contact">Kontak</Link>
+              <Link href="/policies">Kebijakan & Ketentuan</Link>
             </div>
           </div>
         </div>
 
         <div className={styles.bottomRow}>
-          <span>© {year} Classic Bakery. All rights reserved.</span>
+          <span>© {new Date().getFullYear()} Classic Bakery. All rights reserved.</span>
+          <span>Design & development by Classic Bakery Studio.</span>
         </div>
-      </footer>
-    </div>
+      </div>
+    </footer>
   );
-};
-
-export default Footer;
+}

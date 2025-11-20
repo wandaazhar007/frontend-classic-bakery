@@ -1,43 +1,191 @@
 "use client";
 
-import React from "react";
-import styles from "./Navbar.module.scss";
+import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCake, faCartShopping, faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faShoppingBag,
+  faUser,
+  faBars,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
+import styles from "./Navbar.module.scss";
 
-const Navbar: React.FC = () => {
+const NAV_LINKS = [
+  { href: "/", label: "Home" },
+  { href: "/products", label: "Menu Bolu" },
+  { href: "/gallery", label: "Gallery" },
+  { href: "/about", label: "Tentang Kami" },
+  { href: "/contact", label: "Kontak" },
+];
+
+export default function Navbar() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prev) => !prev);
+  };
+
+  const closeSidebar = () => {
+    setIsSidebarOpen(false);
+  };
+
+  const toggleUserMenu = () => {
+    setIsUserMenuOpen((prev) => !prev);
+  };
+
+  const closeUserMenu = () => {
+    setIsUserMenuOpen(false);
+  };
+
   return (
-    <header className={styles.navbar}>
-      <div className={styles.inner}>
-        <Link href="/" className={styles.brand}>
-          <span className={styles.logoIcon}>
-            <FontAwesomeIcon icon={faCake} />
-          </span>
-          <div className={styles.brandText}>
-            <span className={styles.brandName}>Classic Bakery</span>
-            <span className={styles.tagline}>Bahan premium yang tulus dari hati</span>
+    <>
+      <header className={styles.navbar}>
+        <div className={styles.inner}>
+          {/* Brand + Logo */}
+          <Link href="/" className={styles.brand}>
+            <div className={styles.logoWrapper}>
+              <Image
+                src="/images/logo-classic-bakery-cake.png"
+                alt="Classic Bakery"
+                fill
+                sizes="120px"
+                priority
+              />
+            </div>
+            <div className={styles.brandText}>
+              <span className={styles.brandName}>Classic Bakery</span>
+              <span className={styles.brandTagline}>
+                Premium bolu, harga bersahabat
+              </span>
+            </div>
+          </Link>
+
+          {/* Desktop navigation */}
+          <nav className={styles.navLinks} aria-label="Main navigation">
+            {NAV_LINKS.map((item) => (
+              <Link key={item.href} href={item.href} className={styles.navLink}>
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Desktop actions */}
+          <div className={styles.actionsDesktop}>
+            <Link href="/cart">
+              <button type="button" className={styles.cartBtn}>
+                <FontAwesomeIcon icon={faShoppingBag} />
+                <span>Cart</span>
+              </button>
+            </Link>
+            <Link href="/auth/login">
+              <button type="button" className={styles.primaryBtn}>
+                <FontAwesomeIcon
+                  icon={faUser}
+                  style={{ marginRight: "0.35rem" }}
+                />
+                Masuk
+              </button>
+            </Link>
           </div>
-        </Link>
 
-        <nav className={styles.navLinks}>
-          <Link href="/products">Produk</Link>
-          <Link href="/gallery">Galeri</Link>
-          <Link href="/testimonials">Testimoni</Link>
-        </nav>
-
-        <div className={styles.actions}>
-          <Link href="/cart" aria-label="Lihat keranjang" className={styles.iconButton}>
-            <FontAwesomeIcon icon={faCartShopping} />
-            <span className={styles.cartBadge}>0</span>
-          </Link>
-          <Link href="/auth/login" aria-label="Masuk akun" className={styles.iconButton}>
-            <FontAwesomeIcon icon={faUser} />
-          </Link>
+          {/* Mobile actions: user dropdown + hamburger */}
+          <div className={styles.actionsMobile}>
+            <button
+              type="button"
+              className={styles.iconButton}
+              onClick={toggleUserMenu}
+              aria-label="User & cart menu"
+            >
+              <FontAwesomeIcon icon={faUser} />
+            </button>
+            <button
+              type="button"
+              className={styles.iconButton}
+              onClick={toggleSidebar}
+              aria-label="Toggle navigation"
+            >
+              <FontAwesomeIcon icon={isSidebarOpen ? faXmark : faBars} />
+            </button>
+          </div>
         </div>
-      </div>
-    </header>
-  );
-};
 
-export default Navbar;
+        {/* Mobile dropdown for login + cart */}
+        {isUserMenuOpen && (
+          <div className={styles.userDropdown}>
+            <button
+              type="button"
+              className={styles.userDropdownItem}
+              onClick={closeUserMenu}
+            >
+              <Link href="/cart">
+                <span>
+                  <FontAwesomeIcon
+                    icon={faShoppingBag}
+                    style={{ marginRight: "0.4rem" }}
+                  />
+                  Cart
+                </span>
+              </Link>
+            </button>
+            <button
+              type="button"
+              className={styles.userDropdownItem}
+              onClick={closeUserMenu}
+            >
+              <Link href="/auth/login">
+                <span>
+                  <FontAwesomeIcon
+                    icon={faUser}
+                    style={{ marginRight: "0.4rem" }}
+                  />
+                  Masuk
+                </span>
+              </Link>
+            </button>
+          </div>
+        )}
+      </header>
+
+      {/* Sidebar overlay for mobile navigation */}
+      <div
+        className={`${styles.sidebarOverlay} ${isSidebarOpen ? styles.sidebarOverlayVisible : ""
+          }`}
+        onClick={closeSidebar}
+      />
+
+      <aside
+        className={`${styles.sidebar} ${isSidebarOpen ? styles.sidebarOpen : ""
+          }`}
+        aria-hidden={!isSidebarOpen}
+      >
+        <div className={styles.sidebarHeader}>
+          <span className={styles.sidebarTitle}>Menu</span>
+          <button
+            type="button"
+            className={styles.iconButton}
+            onClick={closeSidebar}
+            aria-label="Close navigation"
+          >
+            <FontAwesomeIcon icon={faXmark} />
+          </button>
+        </div>
+
+        <nav className={styles.sidebarNav}>
+          {NAV_LINKS.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={styles.sidebarLink}
+              onClick={closeSidebar}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+      </aside>
+    </>
+  );
+}
