@@ -82,7 +82,7 @@
   box-shadow: $shadow-soft;
   display: flex;
   flex-direction: column;
-  gap: .1rem;
+  // gap: .1rem;
   align-items: center;
 
   @media (min-width: $bp-md) {
@@ -117,6 +117,7 @@
   font-size: 0.8rem;
   color: $color-text-muted;
   text-align: center;
+  margin-top: -.1rem;
 
   @media (min-width: $bp-md) {
     font-size: 0.85rem;
