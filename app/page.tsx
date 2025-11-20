@@ -1,4 +1,5 @@
 import CtaHomeSection from "./components/ctaHome/CtaHomeSection";
+import FAQSection from "./components/faq/FAQSection";
 import FeaturedProductsPreview from "./components/featuredProducts/FeaturedProductsPreview";
 import HeroSection from "./components/heroSection/HeroSection";
 import ReviewsSection from "./components/reviews/ReviewsSection";
@@ -12,6 +13,7 @@ export default function Home() {
       <WhyChooseUsSection />
       <ReviewsSection />
       <CtaHomeSection />
+      <FAQSection />
     </>
   );
 }

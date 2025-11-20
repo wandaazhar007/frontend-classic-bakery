@@ -1,0 +1,147 @@
+@use "../../styles/variables" as *;
+
+.section {
+  padding: 3rem 1.5rem 4rem;
+
+  @media (min-width: $bp-md) {
+    padding: 4rem 1.5rem 5rem;
+  }
+}
+
+.inner {
+  max-width: $max-width;
+  margin: 0 auto;
+  display: grid;
+  gap: 2rem;
+
+  @media (min-width: $bp-md) {
+    grid-template-columns: 1fr 1.1fr;
+    gap: 2.5rem;
+  }
+}
+
+/* GALLERY */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
+
+  @media (min-width: $bp-md) {
+    gap: 0.8rem;
+  }
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  background: $color-cream;
+  box-shadow: $shadow-soft;
+
+  img {
+    object-fit: cover;
+  }
+}
+
+/* FAQ BOX */
+.faqBox {
+  background: radial-gradient(circle at top left,
+      rgba($color-pink-soft, 0.9),
+      rgba($color-cream, 0.96));
+  padding: 1.8rem 1.4rem;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-soft;
+
+  @media (min-width: $bp-md) {
+    padding: 2rem 1.8rem;
+  }
+}
+
+.badge {
+  display: inline-flex;
+  padding: 0.2rem 0.9rem;
+  border-radius: $radius-pill;
+  background: rgba($color-purple, 0.12);
+  color: $color-purple;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.heading {
+  margin-top: 0.75rem;
+  font-size: 1.6rem;
+  line-height: 1.2;
+
+  @media (min-width: $bp-md) {
+    font-size: 1.9rem;
+  }
+}
+
+.tagline {
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  color: $color-text-muted;
+}
+
+/* ACCORDION */
+
+.accordion {
+  margin-top: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.item {
+  background: $color-white;
+  border-radius: $radius-md;
+  box-shadow: $shadow-soft;
+  overflow: hidden;
+}
+
+.question {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  color: $color-text-main;
+
+  span {
+    text-align: left;
+  }
+}
+
+.icon {
+  transition: transform 0.25s ease;
+}
+
+.iconOpen {
+  transform: rotate(180deg);
+}
+
+.answer {
+  max-height: 0;
+  overflow: hidden;
+  background: $color-white;
+  transition: max-height 0.3s ease;
+  padding: 0 1rem;
+}
+
+.answerOpen {
+  max-height: 300px;
+  padding: 0.8rem 1rem 1rem;
+}
+
+.answer p {
+  font-size: 0.85rem;
+  color: $color-text-muted;
+}
