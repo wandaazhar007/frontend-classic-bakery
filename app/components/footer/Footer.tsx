@@ -36,8 +36,9 @@ export function Footer() {
         </div>
 
         <div className={styles.bottomRow}>
+          <span>Build with ❤️ by <strong><Link href="https://wandaazhar.vercel.app/" target="_blank">Wanda Azhar</Link></strong> in Twin Falls, ID. USA</span>
           <span>© {new Date().getFullYear()} Classic Bakery. All rights reserved.</span>
-          <span>Design & development by Classic Bakery Studio.</span>
+          {/* <span>Design & development by Classic Bakery Studio.</span> */}
         </div>
       </div>
     </footer>
