@@ -1,0 +1,222 @@
+@use "../../styles/variables" as *;
+
+.section {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2.5rem 1.5rem;
+  background: radial-gradient(circle at top left,
+      rgba($color-pink-soft, 0.5),
+      $color-cream 40%,
+      $color-white 80%);
+
+  @media (min-width: $bp-md) {
+    align-items: center;
+  }
+}
+
+.inner {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.backLink {
+  display: inline-block;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  color: $color-text-muted;
+  text-decoration: none;
+}
+
+/* Card */
+
+.card {
+  background: $color-white;
+  border-radius: 1.5rem;
+  padding: 2rem 1.8rem 2.4rem;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba($color-border-soft, 0.8);
+
+  @media (min-width: $bp-md) {
+    padding: 2.4rem 2.2rem 2.8rem;
+  }
+}
+
+/* Logo */
+
+.logoCenter {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.8rem;
+}
+
+.logoWrapper {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: $color-white;
+  box-shadow: $shadow-soft;
+
+  @media (min-width: $bp-md) {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+/* Headings */
+
+.heading {
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+
+  @media (min-width: $bp-md) {
+    font-size: 1.6rem;
+  }
+}
+
+.subheading {
+  text-align: center;
+  font-size: 0.9rem;
+  color: $color-text-muted;
+  margin-bottom: 1.2rem;
+}
+
+/* Tabs */
+
+.tabs {
+  display: flex;
+  background: #f3f3f3;
+  border-radius: 999px;
+  padding: 0.12rem;
+  margin-bottom: 1.4rem;
+}
+
+.tab {
+  flex: 1;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  padding: 0.55rem 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: $color-text-muted;
+}
+
+.tabActive {
+  background: $color-white;
+  box-shadow: 0 0 0 1px rgba($color-purple, 0.15),
+    0 8px 18px rgba($color-purple, 0.16);
+  color: $color-purple;
+}
+
+/* Form */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.label {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.input {
+  width: 100%;
+  border-radius: 0.6rem;
+  border: 1px solid $color-border-soft;
+  padding: 0.65rem 0.75rem;
+  font-size: 0.9rem;
+  background: #f6f6f6;
+
+  &:focus {
+    outline: none;
+    border-color: $color-purple;
+    box-shadow: 0 0 0 1px rgba($color-purple, 0.25);
+    background: $color-white;
+  }
+}
+
+.primaryButton {
+  margin-top: 0.4rem;
+  width: 100%;
+  border-radius: 0.7rem;
+  border: none;
+  padding: 0.75rem 0.9rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: $color-text-main;
+  color: $color-white;
+}
+
+/* Divider */
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 1.4rem 0 1rem;
+}
+
+.divider span:first-child,
+.divider span:last-child {
+  flex: 1;
+  height: 1px;
+  background: rgba($color-border-soft, 0.8);
+}
+
+.dividerText {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: $color-text-muted;
+}
+
+/* Google button */
+
+.googleButton {
+  width: 100%;
+  border-radius: 0.7rem;
+  border: 1px solid $color-border-soft;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  background: $color-white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+}
+
+.googleIcon {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Terms */
+
+.termsText {
+  margin-top: 0.9rem;
+  font-size: 0.75rem;
+  color: $color-text-muted;
+  text-align: center;
+}
+
+.linkInline {
+  color: $color-purple;
+  text-decoration: underline;
+}
