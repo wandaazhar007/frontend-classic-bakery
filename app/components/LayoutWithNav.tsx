@@ -18,9 +18,9 @@ export default function LayoutWithNav({
 
   return (
     <>
-      {!hideLayout && <Navbar />}
+      {/* {!hideLayout && <Navbar />} */}
       <main className="main-content">{children}</main>
-      {!hideLayout && <Footer />}
+      {/* {!hideLayout && <Footer />} */}
     </>
   );
 }

@@ -8,12 +8,7 @@ import ReviewsSection from "./components/reviews/ReviewsSection";
 export default function Home() {
   return (
     <>
-      <HeroSection />
-      <FeaturedProductsPreview />
-      {/* <WhyChooseUsSection /> */}
-      <ReviewsSection />
-      <CtaHomeSection />
-      <FAQSection />
+      <h1>test</h1>
     </>
   );
 }

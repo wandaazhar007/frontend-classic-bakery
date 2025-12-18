@@ -1,0 +1,66 @@
+@use "sass:map";
+@use "./variables" as v;
+
+// Breakpoints map
+$breakpoints: (
+  xs: v.$bp-xs,
+  sm: v.$bp-sm,
+  md: v.$bp-md,
+  lg: v.$bp-lg,
+  xl: v.$bp-xl
+);
+
+// Min-width media query
+@mixin up($key) {
+  $value: map.get($breakpoints, $key);
+
+  @if $value ==null {
+    @error "Breakpoint '#{$key}' tidak ditemukan. Gunakan: xs, sm, md, lg, xl.";
+  }
+
+  @media (min-width: $value) {
+    @content;
+  }
+}
+
+// Max-width media query (inclusive style)
+@mixin down($key) {
+  $value: map.get($breakpoints, $key);
+
+  @if $value ==null {
+    @error "Breakpoint '#{$key}' tidak ditemukan. Gunakan: xs, sm, md, lg, xl.";
+  }
+
+  @media (max-width: $value) {
+    @content;
+  }
+}
+
+// Between
+@mixin between($from, $to) {
+  $min: map.get($breakpoints, $from);
+  $max: map.get($breakpoints, $to);
+
+  @if $min ==null or $max ==null {
+    @error "Breakpoint tidak valid. Gunakan: xs, sm, md, lg, xl.";
+  }
+
+  @media (min-width: $min) and (max-width: $max) {
+    @content;
+  }
+}
+
+// Container helper
+@mixin container {
+  width: 100%;
+  max-width: v.$container-max;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: v.$container-pad-mobile;
+  padding-right: v.$container-pad-mobile;
+
+  @include up(md) {
+    padding-left: v.$container-pad-desktop;
+    padding-right: v.$container-pad-desktop;
+  }
+}
