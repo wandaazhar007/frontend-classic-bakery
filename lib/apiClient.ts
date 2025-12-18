@@ -1,6 +1,6 @@
 // lib/apiClient.ts
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:4000";
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5013";
 
 type FetchOptions = {
   query?: Record<string, string | number | boolean | undefined | null>;
