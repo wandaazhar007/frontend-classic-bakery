@@ -1,190 +1,201 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faShoppingBag,
-  faUser,
   faBars,
   faXmark,
+  faBagShopping,
 } from "@fortawesome/free-solid-svg-icons";
+import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import styles from "./Navbar.module.scss";
 
-const NAV_LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/products", label: "Menu" },
-  { href: "/about", label: "Tentang Kami" },
-  { href: "/contact", label: "Kontak" },
-];
+type NavItem = {
+  label: string;
+  href: string;
+};
 
 export default function Navbar() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen((prev) => !prev);
-  };
+  const navItems: NavItem[] = useMemo(
+    () => [
+      { label: "Home", href: "/" },
+      { label: "Produk", href: "/products" },
+      { label: "Tentang Kami", href: "/about" },
+      { label: "Cara Pemesanan", href: "/cara-pemesanan" },
+    ],
+    []
+  );
 
-  const closeSidebar = () => {
-    setIsSidebarOpen(false);
-  };
+  const whatsappHref = "https://wa.me/628381428240";
 
-  const toggleUserMenu = () => {
-    setIsUserMenuOpen((prev) => !prev);
-  };
+  // Lock scroll when mobile drawer open
+  useEffect(() => {
+    if (!isMobileOpen) return;
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [isMobileOpen]);
 
-  const closeUserMenu = () => {
-    setIsUserMenuOpen(false);
-  };
+  function closeMobile() {
+    setIsMobileOpen(false);
+  }
 
   return (
-    <>
-      <header className={styles.navbar}>
-        <div className={styles.inner}>
-          {/* Brand + Logo */}
-          <Link href="/" className={styles.brand}>
-            <div className={styles.logoWrapper}>
-              <Image
-                src="/images/logo-classic-bakery-cake.png"
-                alt="Classic Bakery"
-                fill
-                sizes="120px"
-                priority
-              />
-            </div>
-            <div className={styles.brandText}>
-              <span className={styles.brandName}>Classic Bakery</span>
-              <span className={styles.brandTagline}>
-                Premium bolu, harga bersahabat
-              </span>
-            </div>
-          </Link>
+    <header className={styles.header}>
+      <div className={`${styles.inner} container`}>
+        {/* Left: logo + title */}
+        <Link href="/" className={styles.brand} onClick={closeMobile}>
+          <span className={styles.brandLogo}>
+            <Image
+              src="/images/logo-classic-bakery-cake.png"
+              alt="Classic Bakery logo"
+              width={44}
+              height={44}
+              priority
+            />
+          </span>
+          <span className={styles.brandText}>CLASSIC BAKERY</span>
+        </Link>
 
-          {/* Desktop navigation */}
-          <nav className={styles.navLinks} aria-label="Main navigation">
-            {NAV_LINKS.map((item) => (
-              <Link key={item.href} href={item.href} className={styles.navLink}>
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+        {/* Center: desktop menu */}
+        <nav className={styles.navDesktop} aria-label="Primary">
+          <ul className={styles.navList}>
+            {navItems.map((item) => {
+              const isActive =
+                item.href === "/"
+                  ? pathname === "/"
+                  : pathname?.startsWith(item.href);
 
-          {/* Desktop actions */}
-          <div className={styles.actionsDesktop}>
-            <Link href="/cart">
-              <button type="button" className={styles.cartBtn}>
-                <FontAwesomeIcon icon={faShoppingBag} />
-                <span>Cart</span>
-              </button>
-            </Link>
-            <Link href="/auth/login">
-              <button type="button" className={styles.primaryBtn}>
-                <FontAwesomeIcon
-                  icon={faUser}
-                  style={{ marginRight: "0.35rem" }}
-                />
-                Masuk
-              </button>
-            </Link>
-          </div>
+              return (
+                <li key={item.href} className={styles.navItem}>
+                  <Link
+                    href={item.href}
+                    className={`${styles.navLink} ${isActive ? styles.navLinkActive : ""
+                      }`}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
 
-          {/* Mobile actions: user dropdown + hamburger */}
-          <div className={styles.actionsMobile}>
-            <button
-              type="button"
-              className={styles.iconButton}
-              onClick={toggleUserMenu}
-              aria-label="User & cart menu"
-            >
-              <FontAwesomeIcon icon={faUser} />
-            </button>
-            <button
-              type="button"
-              className={styles.iconButton}
-              onClick={toggleSidebar}
-              aria-label="Toggle navigation"
-            >
-              <FontAwesomeIcon icon={isSidebarOpen ? faXmark : faBars} />
-            </button>
-          </div>
+        {/* Right: CTA (desktop) */}
+        <div className={styles.actions}>
+          <a
+            className={styles.cta}
+            href={whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Order sekarang via WhatsApp"
+          >
+            <span className={styles.ctaIcon} aria-hidden="true">
+              <FontAwesomeIcon icon={faWhatsapp} />
+            </span>
+            <span className={styles.ctaText}>Order Sekarang</span>
+            <span className={styles.ctaIconRight} aria-hidden="true">
+              <FontAwesomeIcon icon={faBagShopping} />
+            </span>
+          </a>
+
+          {/* Mobile hamburger */}
+          <button
+            type="button"
+            className={styles.mobileToggle}
+            onClick={() => setIsMobileOpen(true)}
+            aria-label="Buka menu"
+            aria-haspopup="dialog"
+            aria-controls="mobile-menu"
+            aria-expanded={isMobileOpen}
+          >
+            <FontAwesomeIcon icon={faBars} />
+          </button>
         </div>
+      </div>
 
-        {/* Mobile dropdown for login + cart */}
-        {isUserMenuOpen && (
-          <div className={styles.userDropdown}>
-            <button
-              type="button"
-              className={styles.userDropdownItem}
-              onClick={closeUserMenu}
-            >
-              <Link href="/cart">
-                <span>
-                  <FontAwesomeIcon
-                    icon={faShoppingBag}
-                    style={{ marginRight: "0.4rem" }}
-                  />
-                  Cart
-                </span>
-              </Link>
-            </button>
-            <button
-              type="button"
-              className={styles.userDropdownItem}
-              onClick={closeUserMenu}
-            >
-              <Link href="/auth/login">
-                <span>
-                  <FontAwesomeIcon
-                    icon={faUser}
-                    style={{ marginRight: "0.4rem" }}
-                  />
-                  Masuk
-                </span>
-              </Link>
-            </button>
-          </div>
-        )}
-      </header>
-
-      {/* Sidebar overlay for mobile navigation */}
+      {/* Mobile overlay + drawer */}
       <div
-        className={`${styles.sidebarOverlay} ${isSidebarOpen ? styles.sidebarOverlayVisible : ""
-          }`}
-        onClick={closeSidebar}
+        className={`${styles.overlay} ${isMobileOpen ? styles.overlayOpen : ""}`}
+        onClick={closeMobile}
+        aria-hidden={!isMobileOpen}
       />
 
       <aside
-        className={`${styles.sidebar} ${isSidebarOpen ? styles.sidebarOpen : ""
-          }`}
-        aria-hidden={!isSidebarOpen}
+        id="mobile-menu"
+        className={`${styles.drawer} ${isMobileOpen ? styles.drawerOpen : ""}`}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menu"
       >
-        <div className={styles.sidebarHeader}>
-          <span className={styles.sidebarTitle}>Menu</span>
+        <div className={styles.drawerHeader}>
+          <div className={styles.drawerBrand}>
+            <span className={styles.drawerLogo}>
+              <Image
+                src="/images/logo-classic-bakery-cake.png"
+                alt="Classic Bakery logo"
+                width={40}
+                height={40}
+              />
+            </span>
+            <span className={styles.drawerTitle}>CLASSIC BAKERY</span>
+          </div>
+
           <button
             type="button"
-            className={styles.iconButton}
-            onClick={closeSidebar}
-            aria-label="Close navigation"
+            className={styles.drawerClose}
+            onClick={closeMobile}
+            aria-label="Tutup menu"
           >
             <FontAwesomeIcon icon={faXmark} />
           </button>
         </div>
 
-        <nav className={styles.sidebarNav}>
-          {NAV_LINKS.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={styles.sidebarLink}
-              onClick={closeSidebar}
-            >
-              {item.label}
-            </Link>
-          ))}
+        <nav className={styles.navMobile} aria-label="Mobile primary">
+          <ul className={styles.mobileList}>
+            {navItems.map((item) => {
+              const isActive =
+                item.href === "/"
+                  ? pathname === "/"
+                  : pathname?.startsWith(item.href);
+
+              return (
+                <li key={item.href} className={styles.mobileItem}>
+                  <Link
+                    href={item.href}
+                    onClick={closeMobile}
+                    className={`${styles.mobileLink} ${isActive ? styles.mobileLinkActive : ""
+                      }`}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+
+          <a
+            className={styles.mobileCta}
+            href={whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={closeMobile}
+          >
+            <span className={styles.mobileCtaIcon} aria-hidden="true">
+              <FontAwesomeIcon icon={faWhatsapp} />
+            </span>
+            <span>Order Sekarang</span>
+          </a>
         </nav>
       </aside>
-    </>
+    </header>
   );
 }

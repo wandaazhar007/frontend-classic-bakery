@@ -1,277 +1,348 @@
-@use "../../styles/variables" as *;
+@use "../../styles/variables" as v;
+@use "../../styles/responsive" as r;
 
-.navbar {
+.header {
   position: sticky;
   top: 0;
-  z-index: 40;
-  backdrop-filter: blur(16px);
-  background: rgba($color-cream, 0.94);
-  border-bottom: 1px solid rgba($color-border-soft, 0.9);
+  z-index: v.$z-header;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(1.2rem);
+  border-bottom: v.$border-width solid v.$color-border-soft;
 }
 
 .inner {
-  max-width: $max-width;
-  margin: 0 auto;
-  height: $header-height;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1.25rem;
+  gap: 1.2rem;
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
 }
-
-/* Brand */
 
 .brand {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.7rem;
-  text-decoration: none;
+  gap: 1rem;
+  min-width: max-content;
+
+  &:focus-visible {
+    outline: 0.2rem solid v.$color-purple;
+    outline-offset: 0.3rem;
+    border-radius: v.$radius-12;
+  }
 }
 
-.logoWrapper {
-  position: relative;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
+.brandLogo {
+  width: 4.4rem;
+  height: 4.4rem;
+  border-radius: 1.4rem;
+  background: v.$color-cream;
+  border: v.$border-width solid v.$color-border-soft;
+  box-shadow: v.$shadow-sm;
+  display: grid;
+  place-items: center;
   overflow: hidden;
-  box-shadow: $shadow-soft;
-  background: $color-white;
-  // 7c6f8f
 }
 
 .brandText {
-  display: flex;
-  flex-direction: column;
+  font-size: 1.6rem;
+  letter-spacing: 0.12rem;
+  font-weight: 800;
+  color: v.$color-text-main;
 }
 
-.brandName {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: $color-text-main;
-}
-
-.brandTagline {
-  font-size: 0.75rem;
-  color: $color-text-muted;
-}
-
-/* Desktop nav */
-
-.navLinks {
+.navDesktop {
   display: none;
-  align-items: center;
-  gap: 1.2rem;
-  font-size: 0.9rem;
 
-  @media (min-width: $bp-md) {
-    display: flex;
+  @include r.up(md) {
+    display: block;
   }
+}
+
+.navList {
+  display: flex;
+  align-items: center;
+  gap: 2.2rem;
 }
 
 .navLink {
-  position: relative;
-  padding: 0.2rem 0;
-  cursor: pointer;
-  color: $color-text-main;
-
-  &::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -0.15rem;
-    width: 0;
-    height: 2px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, $color-pink, $color-purple);
-    transition: width 0.2s ease-out;
-  }
-
-  &:hover::after {
-    width: 100%;
-  }
-}
-
-/* Desktop actions */
-
-.actionsDesktop {
-  display: none;
-  align-items: center;
-  gap: 0.75rem;
-
-  @media (min-width: $bp-md) {
-    display: flex;
-  }
-}
-
-.cartBtn {
-  border-radius: $radius-pill;
-  padding: 0.45rem 0.9rem;
-  border: 1px solid $color-border-soft;
-  background: rgba($color-white, 0.9);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.8rem;
-  cursor: pointer;
-  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-  transition: box-shadow 0.15s ease-out, transform 0.15s ease-out;
-  color: $color-text-main;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: v.$color-text-main;
+  padding: 0.8rem 1rem;
+  border-radius: v.$radius-12;
+  transition: background v.$transition-fast, color v.$transition-fast;
 
   &:hover {
-    box-shadow: $shadow-soft;
-    transform: translateY(-1px);
+    background: v.$color-pink-soft;
+    color: v.$color-text-main;
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    outline: 0.2rem solid v.$color-purple;
+    outline-offset: 0.3rem;
+    border-radius: v.$radius-12;
   }
 }
 
-.primaryBtn {
-  border-radius: $radius-pill;
-  padding: 0.55rem 1.1rem;
-  border: none;
-  font-size: 0.8rem;
-  font-weight: 600;
-  cursor: pointer;
-  background: linear-gradient(135deg, $color-pink, $color-purple);
-  color: $color-white;
-  box-shadow: $shadow-soft;
+.navLinkActive {
+  background: v.$color-purple-soft;
+  border: v.$border-width solid v.$color-border-soft;
 }
 
-/* Mobile actions */
-
-.actionsMobile {
+.actions {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 1rem;
+}
 
-  @media (min-width: $bp-md) {
-    display: none;
+.cta {
+  display: none;
+
+  @include r.up(md) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1.1rem 1.4rem;
+    border-radius: v.$radius-16;
+    border: v.$border-width solid v.$color-border-soft;
+    background: linear-gradient(135deg, v.$color-pink-soft, v.$color-purple-soft);
+    box-shadow: v.$shadow-sm;
+    font-weight: 800;
+    font-size: 1.4rem;
+    transition: transform v.$transition-fast, box-shadow v.$transition-fast;
+
+    &:hover {
+      transform: translateY(-0.1rem);
+      box-shadow: v.$shadow-md;
+      text-decoration: none;
+    }
+
+    &:focus-visible {
+      outline: 0.2rem solid v.$color-purple;
+      outline-offset: 0.3rem;
+    }
   }
 }
 
-.iconButton {
+.ctaIcon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 999px;
-  border: 1px solid $color-border-soft;
-  background: rgba($color-white, 0.96);
-  width: 34px;
-  height: 34px;
-  cursor: pointer;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 999rem;
+  background: v.$color-white;
+  border: v.$border-width solid v.$color-border-soft;
+  box-shadow: v.$shadow-sm;
+  color: v.$color-text-main;
+  font-size: 1.6rem;
 }
 
-/* User dropdown (mobile) */
-
-.userDropdown {
-  @media (min-width: $bp-md) {
-    display: none;
-  }
-
-  position: absolute;
-  right: 1.25rem;
-  top: calc($header-height + 0.4rem);
-  z-index: 45;
-  background: $color-white;
-  border-radius: $radius-md;
-  box-shadow: $shadow-soft;
-  padding: 0.35rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
+.ctaText {
+  color: v.$color-text-main;
+  white-space: nowrap;
 }
 
-.userDropdownItem {
-  border: none;
-  background: transparent;
-  padding: 0.4rem 0.7rem;
-  border-radius: 0.6rem;
-  text-align: left;
-  font-size: 0.85rem;
-  cursor: pointer;
-  color: $color-text-main;
-  width: 100%;
+.ctaIconRight {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: v.$color-text-main;
+  font-size: 1.4rem;
+}
 
-  span {
-    display: inline-flex;
-    align-items: center;
-  }
+.mobileToggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.2rem;
+  height: 4.2rem;
+  border-radius: v.$radius-16;
+  border: v.$border-width solid v.$color-border-soft;
+  background: v.$color-white;
+  box-shadow: v.$shadow-sm;
+  font-size: 1.8rem;
+  color: v.$color-text-main;
+  transition: transform v.$transition-fast, box-shadow v.$transition-fast;
 
   &:hover {
-    background: $color-pink-soft;
+    transform: translateY(-0.1rem);
+    box-shadow: v.$shadow-md;
   }
-}
 
-/* Sidebar overlay & panel */
+  &:focus-visible {
+    outline: 0.2rem solid v.$color-purple;
+    outline-offset: 0.3rem;
+  }
 
-.sidebarOverlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0);
-  opacity: 0;
-  pointer-events: none;
-  transition: background 0.2s ease-out, opacity 0.2s ease-out;
-  z-index: 35;
-
-  @media (min-width: $bp-md) {
+  @include r.up(md) {
     display: none;
   }
 }
 
-.sidebarOverlayVisible {
-  background: rgba(0, 0, 0, 0.25);
+/* Mobile drawer */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(65, 50, 84, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity v.$transition-base;
+  z-index: v.$z-overlay;
+}
+
+.overlayOpen {
   opacity: 1;
   pointer-events: auto;
 }
 
-.sidebar {
+.drawer {
   position: fixed;
   top: 0;
   right: 0;
-  width: min(260px, 75vw);
-  height: 100vh;
-  background: $color-cream;
-  box-shadow: -12px 0 30px rgba(0, 0, 0, 0.08);
-  transform: translateX(100%);
-  transition: transform 0.25s ease-out;
-  z-index: 50;
-  padding: 1.3rem 1rem 1rem;
-
+  height: 100dvh;
+  width: min(86vw, 36rem);
+  background: v.$color-white;
+  border-left: v.$border-width solid v.$color-border-soft;
+  box-shadow: v.$shadow-lg;
+  transform: translateX(110%);
+  transition: transform v.$transition-base;
+  z-index: v.$z-modal;
+  padding: 1.6rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-
-  @media (min-width: $bp-md) {
-    display: none;
-  }
+  gap: 1.6rem;
 }
 
-.sidebarOpen {
+.drawerOpen {
   transform: translateX(0);
 }
 
-.sidebarHeader {
+.drawerHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 0.9rem;
+  gap: 1.2rem;
 }
 
-.sidebarTitle {
-  font-weight: 600;
+.drawerBrand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
-.sidebarNav {
+.drawerLogo {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 1.4rem;
+  background: v.$color-cream;
+  border: v.$border-width solid v.$color-border-soft;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.drawerTitle {
+  font-size: 1.4rem;
+  font-weight: 900;
+  letter-spacing: 0.12rem;
+  color: v.$color-text-main;
+}
+
+.drawerClose {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: v.$radius-16;
+  border: v.$border-width solid v.$color-border-soft;
+  background: v.$color-white;
+  box-shadow: v.$shadow-sm;
+  font-size: 2rem;
+  color: v.$color-text-main;
+
+  &:focus-visible {
+    outline: 0.2rem solid v.$color-purple;
+    outline-offset: 0.3rem;
+  }
+}
+
+.navMobile {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 1.6rem;
 }
 
-.sidebarLink {
-  padding: 0.55rem 0.6rem;
-  border-radius: 0.6rem;
-  font-size: 0.9rem;
-  cursor: pointer;
+.mobileList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding-top: 0.4rem;
+}
+
+.mobileLink {
+  display: block;
+  padding: 1.2rem 1.2rem;
+  border-radius: v.$radius-16;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: v.$color-text-main;
+  border: v.$border-width solid transparent;
+  transition: background v.$transition-fast, border-color v.$transition-fast;
 
   &:hover {
-    background: $color-pink-soft;
+    background: v.$color-pink-soft;
+    text-decoration: none;
   }
+
+  &:focus-visible {
+    outline: 0.2rem solid v.$color-purple;
+    outline-offset: 0.3rem;
+  }
+}
+
+.mobileLinkActive {
+  background: v.$color-purple-soft;
+  border-color: v.$color-border-soft;
+}
+
+.mobileCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  padding: 1.3rem 1.4rem;
+  border-radius: v.$radius-16;
+  background: linear-gradient(135deg, v.$color-pink, v.$color-purple);
+  color: v.$color-text-main;
+  font-weight: 900;
+  font-size: 1.6rem;
+  box-shadow: v.$shadow-md;
+  border: v.$border-width solid rgba(255, 255, 255, 0.6);
+
+  &:hover {
+    text-decoration: none;
+    transform: translateY(-0.1rem);
+  }
+
+  &:focus-visible {
+    outline: 0.2rem solid v.$color-purple;
+    outline-offset: 0.3rem;
+  }
+}
+
+.mobileCtaIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 999rem;
+  background: rgba(255, 255, 255, 0.75);
+  border: v.$border-width solid rgba(255, 255, 255, 0.8);
+  box-shadow: v.$shadow-sm;
+  font-size: 1.8rem;
 }
