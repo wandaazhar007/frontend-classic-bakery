@@ -108,10 +108,60 @@
   color: v.$color-text-main;
 }
 
-.desc {
+/* ✅ Rich text from WYSIWYG */
+.rich {
   font-size: 1.5rem;
   line-height: v.$lh-relaxed;
   color: v.$color-text-muted;
+
+  :global(p) {
+    margin: 0 0 1rem;
+  }
+
+  :global(strong) {
+    color: v.$color-text-main;
+    font-weight: 900;
+  }
+
+  :global(em) {
+    font-style: italic;
+  }
+
+  :global(ul),
+  :global(ol) {
+    margin: 0.8rem 0 1.2rem;
+    padding-left: 2rem;
+  }
+
+  :global(li) {
+    margin: 0.4rem 0;
+  }
+
+  :global(a) {
+    color: v.$color-purple;
+    font-weight: 900;
+    text-decoration: underline;
+    text-underline-offset: 0.3rem;
+
+    &:hover {
+      opacity: 0.9;
+    }
+
+    &:focus-visible {
+      outline: 0.2rem solid v.$color-purple;
+      outline-offset: 0.3rem;
+      border-radius: v.$radius-8;
+    }
+  }
+
+  :global(h2),
+  :global(h3),
+  :global(h4) {
+    color: v.$color-text-main;
+    font-weight: 900;
+    line-height: v.$lh-tight;
+    margin: 1.6rem 0 0.8rem;
+  }
 }
 
 .price {

@@ -11,7 +11,7 @@ type Product = {
   id: string;
   name: string;
   shortDescription?: string;
-  description?: string;
+  description?: string; // HTML from WYSIWYG
   price: number;
   images?: ProductImage[];
   category?: string;
@@ -42,6 +42,84 @@ function pickImage(p: Product) {
   return primary || "/images/kue-bolu-2.png";
 }
 
+function stripHtmlToText(html: string) {
+  return html
+    .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?>[\s\S]*?<\/style>/gi, " ")
+    .replace(/<\/?[^>]+(>|$)/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/**
+ * Basic sanitizer:
+ * - remove script/style/iframe/object/embed/img
+ * - remove on* handlers, style, data-* attrs
+ * - sanitize <a> to keep only href/target and add rel
+ * - strip attrs from other tags (keep tags)
+ */
+function sanitizeRichHtml(input?: string) {
+  if (!input) return "";
+
+  let html = String(input);
+
+  // Remove dangerous blocks
+  html = html.replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "");
+  html = html.replace(/<style[\s\S]*?>[\s\S]*?<\/style>/gi, "");
+  html = html.replace(/<(iframe|object|embed)[\s\S]*?>[\s\S]*?<\/\1>/gi, "");
+  html = html.replace(/<(iframe|object|embed)[^>]*\/?>/gi, "");
+  html = html.replace(/<img[^>]*\/?>/gi, ""); // disallow images in description
+
+  // Remove event handlers + inline styles + data-* attributes
+  html = html.replace(/\son\w+="[^"]*"/gi, "");
+  html = html.replace(/\son\w+='[^']*'/gi, "");
+  html = html.replace(/\son\w+=\S+/gi, "");
+  html = html.replace(/\sstyle="[^"]*"/gi, "");
+  html = html.replace(/\sstyle='[^']*'/gi, "");
+  html = html.replace(/\sdata-[\w-]+="[^"]*"/gi, "");
+  html = html.replace(/\sdata-[\w-]+='[^']*'/gi, "");
+
+  // Sanitize anchors: keep href + target only, force rel
+  html = html.replace(/<a\s+([^>]+)>/gi, (match, attrs) => {
+    const hrefMatch = String(attrs).match(/href\s*=\s*["']([^"']+)["']/i);
+    const targetMatch = String(attrs).match(/target\s*=\s*["']([^"']+)["']/i);
+
+    let href = hrefMatch?.[1] ?? "#";
+    const target = targetMatch?.[1] ?? "_blank";
+
+    // block javascript: links
+    if (/^\s*javascript:/i.test(href)) href = "#";
+
+    // allow relative/https/http/wa.me
+    // (kalau selain itu, tetap biarkan sebagai href as-is, tapi bukan javascript)
+    const safeHref = href;
+
+    const safeTarget = target === "_self" ? "_self" : "_blank";
+    const rel = safeTarget === "_blank" ? ' rel="noopener noreferrer"' : "";
+
+    return `<a href="${safeHref}" target="${safeTarget}"${rel}>`;
+  });
+
+  // Strip attributes from other tags: <p class="x"> -> <p>
+  // Keep closing tags as is.
+  html = html.replace(
+    /<(?!\/)(?!a\b)([a-z0-9]+)\s+[^>]*>/gi,
+    "<$1>"
+  );
+
+  return html;
+}
+
+function safeDescription(p: Product) {
+  const raw =
+    p.shortDescription?.trim() ||
+    p.description?.trim() ||
+    `Detail produk ${p.name} dari Classic Bakery.`;
+
+  const text = stripHtmlToText(raw);
+  return text.length > 160 ? `${text.slice(0, 157)}...` : text;
+}
+
 async function getProduct(id: string): Promise<Product | null> {
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
   if (!baseUrl) return null;
@@ -61,24 +139,21 @@ async function getProduct(id: string): Promise<Product | null> {
   }
 }
 
-function safeDescription(p: Product) {
-  const text =
-    p.shortDescription?.trim() ||
-    p.description?.trim() ||
-    `Detail produk ${p.name} dari Classic Bakery.`;
-  return text.length > 160 ? `${text.slice(0, 157)}...` : text;
-}
-
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-  const product = await getProduct(params.id);
+  const { id } = await params;
+
+  const product = await getProduct(id);
   if (!product) {
     return {
       title: "Produk tidak ditemukan | Classic Bakery",
+      description:
+        "Produk yang kamu cari tidak tersedia atau sudah tidak aktif. Silakan kembali ke halaman produk.",
       robots: { index: false, follow: false },
+      alternates: { canonical: "/produk" },
     };
   }
 
@@ -92,6 +167,7 @@ export async function generateMetadata({
       title: `${product.name} | Classic Bakery`,
       description: safeDescription(product),
       url: `${siteUrl}/produk/${product.id}`,
+      type: "website",
       images: [{ url: img, alt: product.name }],
     },
     twitter: {
@@ -106,9 +182,11 @@ export async function generateMetadata({
 export default async function ProductDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const product = await getProduct(params.id);
+  const { id } = await params;
+
+  const product = await getProduct(id);
   if (!product) return notFound();
 
   const waText = encodeURIComponent(
@@ -124,12 +202,7 @@ export default async function ProductDetailPage({
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Home",
-            item: siteUrl,
-          },
+          { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
           {
             "@type": "ListItem",
             position: 2,
@@ -147,7 +220,9 @@ export default async function ProductDetailPage({
       {
         "@type": "Product",
         name: product.name,
-        description: product.description || product.shortDescription || product.name,
+        description: stripHtmlToText(
+          product.description || product.shortDescription || product.name
+        ),
         image: [img].map((x) => (x.startsWith("http") ? x : `${siteUrl}${x}`)),
         brand: { "@type": "Brand", name: "Classic Bakery" },
         offers: {
@@ -160,6 +235,8 @@ export default async function ProductDetailPage({
       },
     ],
   };
+
+  const richHtml = sanitizeRichHtml(product.description);
 
   return (
     <section className={styles.section}>
@@ -210,7 +287,10 @@ export default async function ProductDetailPage({
             ) : null}
 
             {product.description ? (
-              <p className={styles.desc}>{product.description}</p>
+              <div
+                className={styles.rich}
+                dangerouslySetInnerHTML={{ __html: richHtml }}
+              />
             ) : null}
 
             <p className={styles.price}>{formatIDR(product.price)}</p>

@@ -72,12 +72,17 @@
   }
 }
 
+/* ✅ GRID FIX
+  - default (mobile): 2 kolom
+  - very small screens: 1 kolom (biar tidak sempit)
+  - desktop: 3 kolom
+*/
 .grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.4rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
 
-  @include r.up(sm) {
+  @media (max-width: 34rem) {
     grid-template-columns: 1fr 1fr;
   }
 
@@ -167,8 +172,8 @@
   color: v.$color-text-muted;
 
   code {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-      "Courier New", monospace;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+      "Liberation Mono", "Courier New", monospace;
     font-size: 1.3rem;
     color: v.$color-text-main;
   }
