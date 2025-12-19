@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import HeroAbout from "../components/heroAbout/HeroAbout";
 import BrandStory from "../components/brandStory/BrandStory";
+import BrandPromise from "../components/brandPromise/BrandPromise";
 
 const SITE_NAME = "Classic Bakery";
 const PAGE_TITLE = "Tentang Kami — Kisah Manis di Balik Classic Bakery";
@@ -138,6 +139,7 @@ export default function TentangKamiPage() {
 
       <HeroAbout />
       <BrandStory />
+      <BrandPromise />
     </main>
   );
 }
