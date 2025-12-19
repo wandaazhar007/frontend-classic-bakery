@@ -1,0 +1,239 @@
+@use "../../styles/variables" as v;
+@use "../../styles/responsive" as r;
+
+.section {
+  padding: 4.8rem 0;
+  background: v.$color-white;
+
+  @include r.up(md) {
+    padding: 6.4rem 0;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+
+  @include r.up(md) {
+    margin-bottom: 2.6rem;
+  }
+}
+
+.headText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  max-width: 86rem;
+}
+
+.title {
+  font-size: 2.4rem;
+  line-height: v.$lh-tight;
+  font-weight: 900;
+  color: v.$color-text-main;
+
+  @include r.up(md) {
+    font-size: 3.2rem;
+  }
+}
+
+.subtitle {
+  font-size: 1.4rem;
+  line-height: v.$lh-relaxed;
+  color: v.$color-text-muted;
+
+  strong {
+    color: v.$color-text-main;
+    font-weight: 900;
+  }
+}
+
+.controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.ctrlBtn {
+  width: 4.2rem;
+  height: 4.2rem;
+  border-radius: v.$radius-16;
+  border: v.$border-width solid v.$color-border-soft;
+  background: v.$color-cream;
+  box-shadow: v.$shadow-sm;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: v.$color-text-main;
+  font-size: 1.6rem;
+  transition: transform v.$transition-fast, box-shadow v.$transition-fast, opacity v.$transition-fast;
+
+  &:hover {
+    transform: translateY(-0.1rem);
+    box-shadow: v.$shadow-md;
+  }
+
+  &:focus-visible {
+    outline: 0.2rem solid v.$color-purple;
+    outline-offset: 0.3rem;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    &:hover {
+      transform: none;
+      box-shadow: v.$shadow-sm;
+    }
+  }
+}
+
+.slider {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.track {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 1.4rem;
+
+  /* ✅ mobile: 1 card */
+  grid-auto-columns: 100%;
+
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding-bottom: 0.4rem;
+
+  -webkit-overflow-scrolling: touch;
+
+  /* hide scrollbar */
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @include r.up(md) {
+    /* ✅ desktop: 3 cards visible (1 row, sisanya geser) */
+    grid-auto-columns: calc((100% - 2.8rem) / 3);
+  }
+}
+
+.card {
+  scroll-snap-align: start;
+  border-radius: 2rem;
+  border: v.$border-width solid v.$color-border-soft;
+  background: linear-gradient(135deg, v.$color-cream, v.$color-pink-soft);
+  box-shadow: v.$shadow-sm;
+  padding: 1.6rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+
+  @include r.up(md) {
+    padding: 1.8rem;
+  }
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.quote {
+  width: 4.4rem;
+  height: 4.4rem;
+  border-radius: 1.6rem;
+  background: v.$color-white;
+  border: v.$border-width solid v.$color-border-soft;
+  box-shadow: v.$shadow-sm;
+  display: grid;
+  place-items: center;
+  color: v.$color-purple;
+  font-size: 1.8rem;
+}
+
+.stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.star {
+  color: v.$color-purple;
+  font-size: 1.3rem;
+  opacity: 0.95;
+}
+
+.text {
+  font-size: 1.4rem;
+  line-height: v.$lh-relaxed;
+  color: v.$color-text-main;
+}
+
+.footer {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.6rem;
+  border-top: v.$border-width solid rgba(240, 230, 255, 0.9);
+}
+
+.name {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: v.$color-text-main;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 0.9rem;
+  border-radius: 999rem;
+  font-size: 1.2rem;
+  font-weight: 900;
+  background: v.$color-purple-soft;
+  border: v.$border-width solid v.$color-border-soft;
+  color: v.$color-text-main;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.dot {
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 999rem;
+  border: v.$border-width solid v.$color-border-soft;
+  background: v.$color-cream;
+  box-shadow: v.$shadow-sm;
+  transition: transform v.$transition-fast, background v.$transition-fast, width v.$transition-fast;
+
+  &:focus-visible {
+    outline: 0.2rem solid v.$color-purple;
+    outline-offset: 0.3rem;
+  }
+}
+
+.dotActive {
+  width: 2.2rem;
+  background: v.$color-purple;
+}
