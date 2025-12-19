@@ -5,6 +5,7 @@ import FeaturedProduct from "./components/featuredProduct/FeaturedProduct";
 import KenapaPilihKami from "./components/kenapaPilihKami/KenapaPilihKami";
 import CaraPesan from "./components/caraPesan/CaraPesan";
 import Testimoni from "./components/testimoni/Testimoni";
+import FaqMini from "./components/faqMini/FaqMini";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
@@ -100,6 +101,7 @@ export default function HomePage() {
       <KenapaPilihKami />
       <CaraPesan />
       <Testimoni />
+      <FaqMini />
     </>
   );
 }
