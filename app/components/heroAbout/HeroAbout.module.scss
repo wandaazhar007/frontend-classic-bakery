@@ -1,0 +1,239 @@
+@use "../../styles/variables" as v;
+@use "../../styles/responsive" as r;
+
+.section {
+  padding: 4.8rem 0;
+  background: linear-gradient(135deg, v.$color-cream, v.$color-purple-soft);
+
+  @include r.up(md) {
+    padding: 6.4rem 0;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: center;
+
+  @include r.up(md) {
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 2.4rem;
+  }
+}
+
+/* LEFT */
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  width: fit-content;
+  padding: 0.8rem 1.1rem;
+  border-radius: 999rem;
+  background: rgba(255, 255, 255, 0.78);
+  border: v.$border-width solid v.$color-border-soft;
+  box-shadow: v.$shadow-sm;
+}
+
+.kickerIcon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 999rem;
+  display: grid;
+  place-items: center;
+  background: v.$color-white;
+  border: v.$border-width solid v.$color-border-soft;
+  color: v.$color-purple;
+  font-size: 1.5rem;
+}
+
+.kickerText {
+  font-size: 1.3rem;
+  font-weight: 900;
+  letter-spacing: 0.08rem;
+  color: v.$color-purpleText;
+}
+
+.title {
+  font-size: 2.8rem;
+  line-height: v.$lh-tight;
+  font-weight: 900;
+  color: v.$color-text-main;
+
+  @include r.up(md) {
+    font-size: 3.6rem;
+  }
+}
+
+.subheadline {
+  font-size: 1.6rem;
+  line-height: v.$lh-relaxed;
+  font-weight: 800;
+  color: v.$color-text-main;
+  max-width: 68rem;
+}
+
+.description {
+  font-size: 1.4rem;
+  line-height: v.$lh-relaxed;
+  color: v.$color-text-muted;
+  max-width: 78rem;
+
+  strong {
+    color: v.$color-purpleText;
+    font-weight: 900;
+  }
+}
+
+.ctaRow {
+  margin-top: 0.6rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.ctaPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+
+  padding: 1.2rem 1.5rem;
+  border-radius: v.$radius-16;
+  border: v.$border-width solid rgba(255, 255, 255, 0.65);
+  background: linear-gradient(135deg, v.$color-pink, v.$color-purple);
+  box-shadow: v.$shadow-md;
+
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: v.$color-text-main;
+
+  &:hover {
+    text-decoration: none;
+    transform: translateY(-0.1rem);
+    box-shadow: v.$shadow-lg;
+  }
+
+  &:focus-visible {
+    outline: 0.2rem solid v.$color-purple;
+    outline-offset: 0.3rem;
+  }
+}
+
+.ctaSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+
+  padding: 1.2rem 1.5rem;
+  border-radius: v.$radius-16;
+  border: v.$border-width solid v.$color-border-soft;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: v.$shadow-sm;
+
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: v.$color-text-main;
+
+  &:hover {
+    text-decoration: none;
+    transform: translateY(-0.1rem);
+    box-shadow: v.$shadow-md;
+  }
+
+  &:focus-visible {
+    outline: 0.2rem solid v.$color-purple;
+    outline-offset: 0.3rem;
+  }
+}
+
+.ctaIcon {
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 999rem;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.78);
+  border: v.$border-width solid rgba(255, 255, 255, 0.8);
+  box-shadow: v.$shadow-sm;
+  font-size: 1.7rem;
+}
+
+.points {
+  margin-top: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  max-width: 72rem;
+}
+
+.point {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  padding: 1.1rem 1.2rem;
+  border-radius: 2rem;
+  border: v.$border-width solid rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: v.$shadow-sm;
+}
+
+.pointDot {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 999rem;
+  margin-top: 0.6rem;
+  background: v.$color-purple;
+  box-shadow: v.$shadow-sm;
+  flex: 0 0 auto;
+}
+
+.pointText {
+  font-size: 1.4rem;
+  line-height: v.$lh-relaxed;
+  color: v.$color-text-muted;
+
+  strong {
+    color: v.$color-purpleText;
+    font-weight: 900;
+  }
+}
+
+/* RIGHT */
+.right {
+  display: flex;
+  justify-content: center;
+
+  @include r.up(md) {
+    justify-content: flex-end;
+  }
+}
+
+.imageWrap {
+  position: relative;
+  width: 100%;
+  max-width: 46rem;
+  height: 30rem;
+  border-radius: 2.4rem;
+  overflow: hidden;
+
+  background: v.$color-white;
+  border: v.$border-width solid v.$color-border-soft;
+  box-shadow: v.$shadow-md;
+
+  img {
+    object-fit: cover;
+  }
+
+  @include r.up(md) {
+    height: 42rem;
+  }
+}
