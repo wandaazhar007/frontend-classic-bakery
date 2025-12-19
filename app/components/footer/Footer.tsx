@@ -2,7 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faEnvelope,
   faLocationArrow,
+  faMailBulk,
 } from "@fortawesome/free-solid-svg-icons";
 import { faInstagram, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import styles from "./Footer.module.scss";
@@ -137,22 +139,24 @@ export default function Footer() {
             </p>
 
             <p>
+              <FontAwesomeIcon icon={faWhatsapp} className={styles.iconLink} />
               WhatsApp:{" "}
-              <a
+              <Link
                 className={styles.inlineLink}
                 href={whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 +62 838-1428-240
-              </a>
+              </Link>
             </p>
 
             <p>
+              <FontAwesomeIcon icon={faEnvelope} className={styles.iconLink} />
               Email:{" "}
-              <a className={styles.inlineLink} href="mailto:admin@classicbakery.com">
+              <Link className={styles.inlineLink} href="mailto:admin@classicbakery.com">
                 admin@classicbakery.com
-              </a>
+              </Link>
             </p>
           </address>
         </div>
@@ -163,15 +167,15 @@ export default function Footer() {
         <div className={`${styles.bottomInner} container`}>
           <p className={styles.bottomLeft}>
             Build with ❤️ by{" "}
-            <a
+            <Link
               className={styles.author}
               href="https://wandaazhar.vercel.app"
               target="_blank"
               rel="noopener noreferrer"
             >
               Wanda Azhar
-            </a>{" "}
-            in Twin Falls, ID. USA
+            </Link>{" "}
+            in Detroit, MI. USA
           </p>
 
           <p className={styles.bottomRight}>

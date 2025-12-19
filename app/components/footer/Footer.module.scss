@@ -168,6 +168,10 @@
   }
 }
 
+.iconLink {
+  margin-right: .5rem;
+}
+
 .inlineLink {
   color: v.$color-text-main;
   font-weight: 800;
@@ -219,7 +223,7 @@
 .author {
   font-weight: 900;
   color: v.$color-text-main;
-  text-decoration: underline;
+  // text-decoration: underline;
   text-underline-offset: 0.3rem;
 
   &:hover {
