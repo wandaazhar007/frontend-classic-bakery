@@ -1,0 +1,117 @@
+@use "./styles/variables" as v;
+@use "./styles/responsive" as r;
+
+.section {
+  padding: 6.4rem 0;
+  background: linear-gradient(135deg, v.$color-cream, v.$color-pink-soft);
+  min-height: 70dvh;
+  display: flex;
+  align-items: center;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.85);
+  border: v.$border-width solid v.$color-border-soft;
+  border-radius: 2.4rem;
+  box-shadow: v.$shadow-md;
+  padding: 2.2rem;
+  max-width: 72rem;
+  margin: 0 auto;
+
+  @include r.up(md) {
+    padding: 3.2rem;
+  }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 1.6rem;
+}
+
+.logo {
+  width: 5.6rem;
+  height: 5.6rem;
+  border-radius: 999rem;
+  overflow: hidden;
+  border: v.$border-width solid v.$color-border-soft;
+  background: v.$color-white;
+  box-shadow: v.$shadow-sm;
+  display: grid;
+  place-items: center;
+}
+
+.brandText {
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: 0.06rem;
+  color: v.$color-text-main;
+}
+
+.title {
+  font-size: 2.6rem;
+  font-weight: 900;
+  line-height: v.$lh-tight;
+  color: v.$color-text-main;
+
+  @include r.up(md) {
+    font-size: 3.2rem;
+  }
+}
+
+.desc {
+  margin-top: 0.8rem;
+  font-size: 1.5rem;
+  line-height: v.$lh-relaxed;
+  color: v.$color-text-muted;
+  max-width: 60rem;
+}
+
+.actions {
+  margin-top: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  @include r.up(sm) {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.2rem 1.6rem;
+  border-radius: v.$radius-16;
+  font-size: 1.5rem;
+  font-weight: 900;
+  box-shadow: v.$shadow-sm;
+  transition: transform v.$transition-fast, box-shadow v.$transition-fast;
+
+  &:hover {
+    transform: translateY(-0.1rem);
+    box-shadow: v.$shadow-md;
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    outline: 0.2rem solid v.$color-purple;
+    outline-offset: 0.3rem;
+  }
+}
+
+.primary {
+  background: linear-gradient(135deg, v.$color-pink, v.$color-purple-soft);
+  border: v.$border-width solid rgba(255, 255, 255, 0.7);
+  color: v.$color-text-main;
+}
+
+.secondary {
+  background: v.$color-white;
+  border: v.$border-width solid v.$color-border-soft;
+  color: v.$color-text-main;
+}
