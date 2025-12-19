@@ -1,0 +1,197 @@
+@use "../../styles/variables" as v;
+@use "../../styles/responsive" as r;
+
+.section {
+  padding: 4.8rem 0;
+  background: v.$color-white;
+
+  @include r.up(md) {
+    padding: 6.4rem 0;
+  }
+}
+
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+  margin-bottom: 1.8rem;
+  font-size: 1.3rem;
+  color: v.$color-text-muted;
+}
+
+.crumb {
+  color: v.$color-text-main;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+
+  &:hover {
+    color: v.$color-purple;
+  }
+
+  &:focus-visible {
+    outline: 0.2rem solid v.$color-purple;
+    outline-offset: 0.3rem;
+    border-radius: v.$radius-8;
+  }
+}
+
+.sep {
+  color: v.$color-text-muted;
+}
+
+.current {
+  font-weight: 900;
+  color: v.$color-text-main;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+
+  @include r.up(md) {
+    grid-template-columns: 1fr 1fr;
+    gap: 3.2rem;
+    align-items: start;
+  }
+}
+
+.media {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.imageWrap {
+  position: relative;
+  width: 100%;
+  height: 32rem;
+  border-radius: 2rem;
+  overflow: hidden;
+  border: v.$border-width solid v.$color-border-soft;
+  background: v.$color-cream;
+  box-shadow: v.$shadow-md;
+
+  @include r.up(md) {
+    height: 44rem;
+    position: sticky;
+    top: 9rem;
+  }
+
+  img {
+    object-fit: cover;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.title {
+  font-size: 2.8rem;
+  line-height: v.$lh-tight;
+  font-weight: 900;
+  color: v.$color-text-main;
+
+  @include r.up(md) {
+    font-size: 3.6rem;
+  }
+}
+
+.short {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: v.$color-text-main;
+}
+
+.desc {
+  font-size: 1.5rem;
+  line-height: v.$lh-relaxed;
+  color: v.$color-text-muted;
+}
+
+.price {
+  font-size: 2rem;
+  font-weight: 900;
+  color: v.$color-purple;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 1.2rem 1.6rem;
+  border-radius: v.$radius-16;
+  background: linear-gradient(135deg, v.$color-pink, v.$color-purple-soft);
+  border: v.$border-width solid rgba(255, 255, 255, 0.65);
+  box-shadow: v.$shadow-sm;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: v.$color-text-main;
+  transition: transform v.$transition-fast, box-shadow v.$transition-fast;
+
+  &:hover {
+    transform: translateY(-0.1rem);
+    box-shadow: v.$shadow-md;
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    outline: 0.2rem solid v.$color-purple;
+    outline-offset: 0.3rem;
+  }
+}
+
+.infoCard,
+.hoursCard {
+  background: v.$color-cream;
+  border: v.$border-width solid v.$color-border-soft;
+  border-radius: v.$radius-16;
+  box-shadow: v.$shadow-sm;
+  padding: 1.4rem;
+}
+
+.infoTitle {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: v.$color-text-main;
+}
+
+.infoList {
+  margin-top: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-size: 1.4rem;
+  color: v.$color-text-muted;
+
+  strong {
+    color: v.$color-text-main;
+    font-weight: 900;
+  }
+}
+
+.back {
+  margin-top: 0.4rem;
+  width: fit-content;
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: v.$color-text-main;
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+
+  &:hover {
+    color: v.$color-purple;
+  }
+
+  &:focus-visible {
+    outline: 0.2rem solid v.$color-purple;
+    outline-offset: 0.3rem;
+    border-radius: v.$radius-8;
+  }
+}
