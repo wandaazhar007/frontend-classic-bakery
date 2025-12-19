@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import HeroMain from "./components/heroMain/HeroMain";
 import FeaturedProduct from "./components/featuredProduct/FeaturedProduct";
+import KenapaPilihKami from "./components/kenapaPilihKami/KenapaPilihKami";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
@@ -94,6 +95,7 @@ export default function HomePage() {
 
       <HeroMain />
       <FeaturedProduct />
+      <KenapaPilihKami />
     </>
   );
 }
