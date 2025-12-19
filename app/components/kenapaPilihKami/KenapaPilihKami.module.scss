@@ -3,7 +3,7 @@
 
 .section {
   padding: 4.8rem 0;
-  background: v.$color-white;
+  background: linear-gradient(135deg, v.$color-purple-soft, v.$color-pink-soft);
 
   @include r.up(md) {
     padding: 6.4rem 0;
