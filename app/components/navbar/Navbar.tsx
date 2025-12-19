@@ -23,13 +23,15 @@ export default function Navbar() {
     () => [
       { label: "Home", href: "/" },
       { label: "Produk", href: "/produk" },
-      { label: "Tentang Kami", href: "/about" },
+      { label: "Tentang Kami", href: "/tentang-kami" },
       { label: "Cara Pemesanan", href: "/cara-pemesanan" },
     ],
     []
   );
 
-  const whatsappHref = "https://wa.me/628381428240";
+  const waText = encodeURIComponent("Hallo, Classic Bakery");
+  const whatsappHref = `https://wa.me/628381428240?text=${waText}`;
+  // const whatsappHref = "https://wa.me/628381428240";
 
   function closeMobile() {
     setIsMobileOpen(false);
