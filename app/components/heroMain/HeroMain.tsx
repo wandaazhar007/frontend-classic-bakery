@@ -49,7 +49,7 @@ export default function HeroMain() {
   useEffect(() => {
     const t = window.setInterval(() => {
       setActiveIndex((i) => (i + 1) % images.length);
-    }, 2000);
+    }, 4000);
 
     return () => window.clearInterval(t);
   }, [images.length]);
@@ -215,9 +215,9 @@ export default function HeroMain() {
             </div>
           </div>
 
-          <p className={styles.sliderHint}>
+          {/* <p className={styles.sliderHint}>
             Geser foto ke kiri/kanan atau klik tombol panah.
-          </p>
+          </p> */}
         </div>
       </div>
     </section>
