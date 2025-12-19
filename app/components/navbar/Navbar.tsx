@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -16,9 +16,8 @@ type NavItem = {
 
 export default function Navbar() {
   const pathname = usePathname();
-
-  // open state (controls CSS animation)
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const drawerRef = useRef<HTMLElement | null>(null);
 
   const navItems: NavItem[] = useMemo(
     () => [
@@ -67,77 +66,90 @@ export default function Navbar() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [isMobileOpen]);
 
+  // Ensure drawer always starts at top when opened
+  useEffect(() => {
+    if (!isMobileOpen) return;
+    const el = drawerRef.current;
+    if (el) el.scrollTop = 0;
+  }, [isMobileOpen]);
+
   return (
-    <header className={styles.header}>
-      <div className={`${styles.inner} container`}>
-        {/* Left: logo + title */}
-        <Link href="/" className={styles.brand} onClick={closeMobile}>
-          <span className={styles.brandLogo}>
-            <Image
-              src="/images/logo-classic-bakery-cake.png"
-              alt="Classic Bakery logo"
-              width={44}
-              height={44}
-              priority
-            />
-          </span>
-          <span className={styles.brandText}>CLASSIC BAKERY</span>
-        </Link>
-
-        {/* Center: desktop menu */}
-        <nav className={styles.navDesktop} aria-label="Primary">
-          <ul className={styles.navList}>
-            {navItems.map((item) => {
-              const isActive =
-                item.href === "/" ? pathname === "/" : pathname?.startsWith(item.href);
-
-              return (
-                <li key={item.href} className={styles.navItem}>
-                  <Link
-                    href={item.href}
-                    className={`${styles.navLink} ${isActive ? styles.navLinkActive : ""}`}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-
-        {/* Right: CTA (desktop) + mobile toggle */}
-        <div className={styles.actions}>
-          <a
-            className={styles.cta}
-            href={whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Order sekarang via WhatsApp"
-          >
-            <span className={styles.ctaIcon} aria-hidden="true">
-              <FontAwesomeIcon icon={faWhatsapp} />
+    <>
+      {/* ✅ header hanya untuk bar navbar */}
+      <header className={styles.header}>
+        <div className={`${styles.inner} container`}>
+          {/* Left: logo + title */}
+          <Link href="/" className={styles.brand} onClick={closeMobile}>
+            <span className={styles.brandLogo}>
+              <Image
+                src="/images/logo-classic-bakery-cake.png"
+                alt="Classic Bakery logo"
+                width={44}
+                height={44}
+                priority
+              />
             </span>
-            <span className={styles.ctaText}>Order Sekarang</span>
-            <span className={styles.ctaIconRight} aria-hidden="true">
-              <FontAwesomeIcon icon={faBagShopping} />
-            </span>
-          </a>
+            <span className={styles.brandText}>CLASSIC BAKERY</span>
+          </Link>
 
-          <button
-            type="button"
-            className={styles.mobileToggle}
-            onClick={() => setIsMobileOpen(true)}
-            aria-label="Buka menu"
-            aria-haspopup="dialog"
-            aria-controls="mobile-menu"
-            aria-expanded={isMobileOpen}
-          >
-            <FontAwesomeIcon icon={faBars} />
-          </button>
+          {/* Center: desktop menu */}
+          <nav className={styles.navDesktop} aria-label="Primary">
+            <ul className={styles.navList}>
+              {navItems.map((item) => {
+                const isActive =
+                  item.href === "/"
+                    ? pathname === "/"
+                    : pathname?.startsWith(item.href);
+
+                return (
+                  <li key={item.href} className={styles.navItem}>
+                    <Link
+                      href={item.href}
+                      className={`${styles.navLink} ${isActive ? styles.navLinkActive : ""
+                        }`}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+
+          {/* Right: CTA (desktop) + mobile toggle */}
+          <div className={styles.actions}>
+            <a
+              className={styles.cta}
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Order sekarang via WhatsApp"
+            >
+              <span className={styles.ctaIcon} aria-hidden="true">
+                <FontAwesomeIcon icon={faWhatsapp} />
+              </span>
+              <span className={styles.ctaText}>Order Sekarang</span>
+              <span className={styles.ctaIconRight} aria-hidden="true">
+                <FontAwesomeIcon icon={faBagShopping} />
+              </span>
+            </a>
+
+            <button
+              type="button"
+              className={styles.mobileToggle}
+              onClick={() => setIsMobileOpen(true)}
+              aria-label="Buka menu"
+              aria-haspopup="dialog"
+              aria-controls="mobile-menu"
+              aria-expanded={isMobileOpen}
+            >
+              <FontAwesomeIcon icon={faBars} />
+            </button>
+          </div>
         </div>
-      </div>
+      </header>
 
-      {/* Mobile overlay + drawer (always rendered, but truly hidden when closed via CSS) */}
+      {/* ✅ overlay + drawer di luar header (fixed ke viewport, tidak ikut scroll) */}
       <div
         className={`${styles.overlay} ${isMobileOpen ? styles.overlayOpen : ""}`}
         onClick={closeMobile}
@@ -146,6 +158,7 @@ export default function Navbar() {
 
       <aside
         id="mobile-menu"
+        ref={drawerRef}
         className={`${styles.drawer} ${isMobileOpen ? styles.drawerOpen : ""}`}
         role="dialog"
         aria-modal={isMobileOpen ? "true" : "false"}
@@ -178,7 +191,9 @@ export default function Navbar() {
           <ul className={styles.mobileList}>
             {navItems.map((item) => {
               const isActive =
-                item.href === "/" ? pathname === "/" : pathname?.startsWith(item.href);
+                item.href === "/"
+                  ? pathname === "/"
+                  : pathname?.startsWith(item.href);
 
               return (
                 <li key={item.href} className={styles.mobileItem}>
@@ -209,6 +224,6 @@ export default function Navbar() {
           </a>
         </nav>
       </aside>
-    </header>
+    </>
   );
 }

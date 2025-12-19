@@ -17,8 +17,6 @@
   gap: 1.2rem;
   padding-top: 1.2rem;
   padding-bottom: 1.2rem;
-
-  /* ✅ allow children to shrink without causing overflow */
   min-width: 0;
 }
 
@@ -26,8 +24,6 @@
   display: inline-flex;
   align-items: center;
   gap: 1rem;
-
-  /* ✅ IMPORTANT: was min-width: max-content; (causes overflow on small screens) */
   min-width: 0;
   max-width: 100%;
 
@@ -48,8 +44,6 @@
   display: grid;
   place-items: center;
   overflow: hidden;
-
-  /* prevent shrinking */
   flex: 0 0 auto;
 }
 
@@ -59,7 +53,6 @@
   font-weight: 800;
   color: v.$color-text-main;
 
-  /* ✅ prevent brand text from forcing horizontal scroll */
   min-width: 0;
   max-width: 18rem;
   white-space: nowrap;
@@ -121,8 +114,6 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-
-  /* ✅ avoid pushing layout wider than viewport */
   flex: 0 0 auto;
 }
 
@@ -211,7 +202,7 @@
   }
 }
 
-/* Mobile drawer */
+/* Overlay (fixed to viewport) */
 .overlay {
   position: fixed;
   inset: 0;
@@ -229,12 +220,14 @@
   pointer-events: auto;
 }
 
+/* Drawer (fixed to viewport) */
 .drawer {
   position: fixed;
   top: 0;
   right: 0;
-  height: 100dvh;
+  bottom: 0;
   width: min(86vw, 36rem);
+
   background: v.$color-white;
   border-left: v.$border-width solid v.$color-border-soft;
 
@@ -245,14 +238,15 @@
 
   transform: translateX(100%);
   transition: transform v.$transition-base, opacity v.$transition-base, visibility v.$transition-base;
+
   z-index: v.$z-modal;
 
-  padding: 1.6rem;
   display: flex;
   flex-direction: column;
-  gap: 1.6rem;
 
-  will-change: transform;
+  /* ✅ drawer bisa scroll sendiri, close button tetap kelihatan */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .drawerOpen {
@@ -264,10 +258,18 @@
 }
 
 .drawerHeader {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1.2rem;
+
+  padding: 1.6rem;
+  background: v.$color-white;
+  border-bottom: v.$border-width solid v.$color-border-soft;
 }
 
 .drawerBrand {
@@ -320,7 +322,9 @@
   }
 }
 
+/* Drawer body */
 .navMobile {
+  padding: 1.6rem;
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
@@ -330,7 +334,6 @@
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
-  padding-top: 0.4rem;
 }
 
 .mobileLink {
