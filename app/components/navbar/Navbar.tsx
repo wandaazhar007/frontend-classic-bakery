@@ -5,11 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBars,
-  faXmark,
-  faBagShopping,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBars, faXmark, faBagShopping } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import styles from "./Navbar.module.scss";
 
@@ -20,6 +16,8 @@ type NavItem = {
 
 export default function Navbar() {
   const pathname = usePathname();
+
+  // open state (controls CSS animation)
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const navItems: NavItem[] = useMemo(
@@ -34,19 +32,40 @@ export default function Navbar() {
 
   const whatsappHref = "https://wa.me/628381428240";
 
-  // Lock scroll when mobile drawer open
-  useEffect(() => {
-    if (!isMobileOpen) return;
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = originalOverflow;
-    };
-  }, [isMobileOpen]);
-
   function closeMobile() {
     setIsMobileOpen(false);
   }
+
+  // Lock scroll (X & Y) when mobile drawer open
+  useEffect(() => {
+    if (!isMobileOpen) return;
+
+    const originalBodyOverflow = document.body.style.overflow;
+    const originalBodyOverflowX = document.body.style.overflowX;
+    const originalHtmlOverflow = document.documentElement.style.overflow;
+    const originalHtmlOverflowX = document.documentElement.style.overflowX;
+
+    document.body.style.overflow = "hidden";
+    document.body.style.overflowX = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    document.documentElement.style.overflowX = "hidden";
+
+    return () => {
+      document.body.style.overflow = originalBodyOverflow;
+      document.body.style.overflowX = originalBodyOverflowX;
+      document.documentElement.style.overflow = originalHtmlOverflow;
+      document.documentElement.style.overflowX = originalHtmlOverflowX;
+    };
+  }, [isMobileOpen]);
+
+  // Close on ESC
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") closeMobile();
+    }
+    if (isMobileOpen) window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isMobileOpen]);
 
   return (
     <header className={styles.header}>
@@ -70,16 +89,13 @@ export default function Navbar() {
           <ul className={styles.navList}>
             {navItems.map((item) => {
               const isActive =
-                item.href === "/"
-                  ? pathname === "/"
-                  : pathname?.startsWith(item.href);
+                item.href === "/" ? pathname === "/" : pathname?.startsWith(item.href);
 
               return (
                 <li key={item.href} className={styles.navItem}>
                   <Link
                     href={item.href}
-                    className={`${styles.navLink} ${isActive ? styles.navLinkActive : ""
-                      }`}
+                    className={`${styles.navLink} ${isActive ? styles.navLinkActive : ""}`}
                   >
                     {item.label}
                   </Link>
@@ -89,7 +105,7 @@ export default function Navbar() {
           </ul>
         </nav>
 
-        {/* Right: CTA (desktop) */}
+        {/* Right: CTA (desktop) + mobile toggle */}
         <div className={styles.actions}>
           <a
             className={styles.cta}
@@ -107,7 +123,6 @@ export default function Navbar() {
             </span>
           </a>
 
-          {/* Mobile hamburger */}
           <button
             type="button"
             className={styles.mobileToggle}
@@ -122,7 +137,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile overlay + drawer */}
+      {/* Mobile overlay + drawer (always rendered, but truly hidden when closed via CSS) */}
       <div
         className={`${styles.overlay} ${isMobileOpen ? styles.overlayOpen : ""}`}
         onClick={closeMobile}
@@ -133,7 +148,7 @@ export default function Navbar() {
         id="mobile-menu"
         className={`${styles.drawer} ${isMobileOpen ? styles.drawerOpen : ""}`}
         role="dialog"
-        aria-modal="true"
+        aria-modal={isMobileOpen ? "true" : "false"}
         aria-label="Menu"
       >
         <div className={styles.drawerHeader}>
@@ -163,9 +178,7 @@ export default function Navbar() {
           <ul className={styles.mobileList}>
             {navItems.map((item) => {
               const isActive =
-                item.href === "/"
-                  ? pathname === "/"
-                  : pathname?.startsWith(item.href);
+                item.href === "/" ? pathname === "/" : pathname?.startsWith(item.href);
 
               return (
                 <li key={item.href} className={styles.mobileItem}>

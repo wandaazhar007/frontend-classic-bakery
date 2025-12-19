@@ -7,6 +7,9 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-behavior: smooth;
+
+  /* ✅ prevent horizontal scroll on mobile */
+  overflow-x: clip;
 }
 
 body {
@@ -17,6 +20,9 @@ body {
   color: v.$color-text-main;
   background: v.$color-cream;
   min-height: 100dvh;
+
+  /* ✅ prevent horizontal scroll on mobile */
+  overflow-x: clip;
 }
 
 /* Better default box sizing */

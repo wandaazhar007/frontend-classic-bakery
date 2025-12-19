@@ -17,13 +17,19 @@
   gap: 1.2rem;
   padding-top: 1.2rem;
   padding-bottom: 1.2rem;
+
+  /* ✅ allow children to shrink without causing overflow */
+  min-width: 0;
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
   gap: 1rem;
-  min-width: max-content;
+
+  /* ✅ IMPORTANT: was min-width: max-content; (causes overflow on small screens) */
+  min-width: 0;
+  max-width: 100%;
 
   &:focus-visible {
     outline: 0.2rem solid v.$color-purple;
@@ -42,6 +48,9 @@
   display: grid;
   place-items: center;
   overflow: hidden;
+
+  /* prevent shrinking */
+  flex: 0 0 auto;
 }
 
 .brandText {
@@ -49,6 +58,23 @@
   letter-spacing: 0.12rem;
   font-weight: 800;
   color: v.$color-text-main;
+
+  /* ✅ prevent brand text from forcing horizontal scroll */
+  min-width: 0;
+  max-width: 18rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @include r.up(sm) {
+    max-width: 22rem;
+  }
+
+  @include r.up(md) {
+    max-width: none;
+    overflow: visible;
+    text-overflow: unset;
+  }
 }
 
 .navDesktop {
@@ -95,6 +121,9 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+
+  /* ✅ avoid pushing layout wider than viewport */
+  flex: 0 0 auto;
 }
 
 .cta {
@@ -188,13 +217,15 @@
   inset: 0;
   background: rgba(65, 50, 84, 0.35);
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transition: opacity v.$transition-base;
+  transition: opacity v.$transition-base, visibility v.$transition-base;
   z-index: v.$z-overlay;
 }
 
 .overlayOpen {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
 }
 
@@ -206,18 +237,30 @@
   width: min(86vw, 36rem);
   background: v.$color-white;
   border-left: v.$border-width solid v.$color-border-soft;
-  box-shadow: v.$shadow-lg;
-  transform: translateX(110%);
-  transition: transform v.$transition-base;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  box-shadow: none;
+
+  transform: translateX(100%);
+  transition: transform v.$transition-base, opacity v.$transition-base, visibility v.$transition-base;
   z-index: v.$z-modal;
+
   padding: 1.6rem;
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
+
+  will-change: transform;
 }
 
 .drawerOpen {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
   transform: translateX(0);
+  box-shadow: v.$shadow-lg;
 }
 
 .drawerHeader {
@@ -231,6 +274,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  min-width: 0;
 }
 
 .drawerLogo {
@@ -242,6 +286,7 @@
   display: grid;
   place-items: center;
   overflow: hidden;
+  flex: 0 0 auto;
 }
 
 .drawerTitle {
@@ -249,6 +294,11 @@
   font-weight: 900;
   letter-spacing: 0.12rem;
   color: v.$color-text-main;
+
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .drawerClose {
