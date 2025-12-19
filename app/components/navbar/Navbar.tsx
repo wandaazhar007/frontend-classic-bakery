@@ -25,7 +25,7 @@ export default function Navbar() {
   const navItems: NavItem[] = useMemo(
     () => [
       { label: "Home", href: "/" },
-      { label: "Produk", href: "/products" },
+      { label: "Produk", href: "/produk" },
       { label: "Tentang Kami", href: "/about" },
       { label: "Cara Pemesanan", href: "/cara-pemesanan" },
     ],

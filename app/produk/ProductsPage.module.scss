@@ -1,0 +1,318 @@
+@use "../styles/variables" as v;
+@use "../styles/responsive" as r;
+
+.page {
+  padding: 4.8rem 0;
+  background: v.$color-white;
+
+  @include r.up(md) {
+    padding: 6.4rem 0;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2.2rem;
+
+  @include r.up(md) {
+    margin-bottom: 2.8rem;
+  }
+}
+
+.title {
+  font-size: 2.8rem;
+  line-height: v.$lh-tight;
+  font-weight: 900;
+  color: v.$color-text-main;
+
+  @include r.up(md) {
+    font-size: 3.6rem;
+  }
+}
+
+.subtitle {
+  font-size: 1.4rem;
+  line-height: v.$lh-relaxed;
+  color: v.$color-text-muted;
+  max-width: 86rem;
+
+  strong {
+    color: v.$color-text-main;
+    font-weight: 900;
+  }
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.searchWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-width: 52rem;
+  width: 100%;
+}
+
+.searchLabel {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: v.$color-text-main;
+}
+
+.searchInput {
+  width: 100%;
+  border: v.$border-width solid v.$color-border-soft;
+  border-radius: v.$radius-16;
+  padding: 1.2rem 1.4rem;
+  background: v.$color-cream;
+  font-size: 1.5rem;
+
+  &:focus-visible {
+    outline: 0.2rem solid v.$color-purple;
+    outline-offset: 0.3rem;
+    border-color: v.$color-purple;
+  }
+}
+
+.searchHint {
+  margin: 0;
+  font-size: 1.2rem;
+  color: v.$color-text-muted;
+}
+
+/* Pagination (moved bottom) */
+.paginationBottom {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.6rem;
+
+  @include r.up(md) {
+    margin-top: 1.2rem;
+  }
+}
+
+.pageBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.1rem 1.4rem;
+  border-radius: v.$radius-16;
+  border: v.$border-width solid v.$color-border-soft;
+  background: linear-gradient(135deg, v.$color-pink-soft, v.$color-purple-soft);
+  box-shadow: v.$shadow-sm;
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: v.$color-text-main;
+  transition: transform v.$transition-fast, box-shadow v.$transition-fast;
+
+  &:hover {
+    transform: translateY(-0.1rem);
+    box-shadow: v.$shadow-md;
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: v.$shadow-sm;
+  }
+
+  &:focus-visible {
+    outline: 0.2rem solid v.$color-purple;
+    outline-offset: 0.3rem;
+  }
+}
+
+.pageInfo {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: v.$color-text-main;
+  padding: 0.8rem 1rem;
+  border-radius: 999rem;
+  border: v.$border-width solid v.$color-border-soft;
+  background: v.$color-white;
+}
+
+/* GRID
+  - Mobile: 2 kolom
+  - Desktop: 3 kolom
+*/
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.4rem;
+
+  @include r.up(md) {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.8rem;
+  }
+}
+
+/* Card */
+.card {
+  display: block;
+  border-radius: 2rem;
+  border: v.$border-width solid v.$color-border-soft;
+  background: linear-gradient(135deg, v.$color-cream, v.$color-pink-soft);
+  box-shadow: v.$shadow-sm;
+  overflow: hidden;
+  transition: transform v.$transition-fast, box-shadow v.$transition-fast;
+
+  &:hover {
+    transform: translateY(-0.2rem);
+    box-shadow: v.$shadow-md;
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    outline: 0.2rem solid v.$color-purple;
+    outline-offset: 0.4rem;
+  }
+}
+
+.imageWrap {
+  position: relative;
+  width: 100%;
+  height: 18rem;
+  background: v.$color-white;
+
+  @include r.up(md) {
+    height: 22rem;
+  }
+
+  img {
+    object-fit: cover;
+  }
+}
+
+.cardBody {
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.name {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: v.$color-text-main;
+  line-height: 1.3;
+}
+
+.price {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: v.$color-purple;
+}
+
+/* States */
+.stateBox {
+  border: v.$border-width solid v.$color-border-soft;
+  border-radius: v.$radius-16;
+  background: v.$color-cream;
+  padding: 1.6rem;
+}
+
+.stateTitle {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: v.$color-text-main;
+}
+
+.stateDesc {
+  margin: 0.6rem 0 0;
+  font-size: 1.4rem;
+  color: v.$color-text-muted;
+  line-height: v.$lh-relaxed;
+}
+
+/* Skeleton */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-35%);
+  }
+
+  100% {
+    transform: translateX(135%);
+  }
+}
+
+.skeletonCard {
+  border-radius: 2rem;
+  border: v.$border-width solid v.$color-border-soft;
+  background: v.$color-white;
+  overflow: hidden;
+  box-shadow: v.$shadow-sm;
+}
+
+.skeletonImage {
+  height: 18rem;
+  position: relative;
+  background: rgba(226, 214, 255, 0.35);
+
+  @include r.up(md) {
+    height: 22rem;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.55) 50%,
+        rgba(255, 255, 255, 0) 100%);
+    transform: translateX(-35%);
+    animation: shimmer 1.1s infinite;
+  }
+}
+
+.skeletonBody {
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.skeletonLine,
+.skeletonLineSmall {
+  height: 1.2rem;
+  border-radius: 999rem;
+  position: relative;
+  background: rgba(255, 193, 220, 0.35);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.55) 50%,
+        rgba(255, 255, 255, 0) 100%);
+    transform: translateX(-35%);
+    animation: shimmer 1.1s infinite;
+  }
+}
+
+.skeletonLine {
+  width: 85%;
+}
+
+.skeletonLineSmall {
+  width: 55%;
+}
