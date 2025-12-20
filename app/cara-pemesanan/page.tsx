@@ -3,6 +3,7 @@ import Link from "next/link";
 import StepByStep from "../components/stepByStep/StepByStep";
 import InfoLayanan from "../components/infoLayanan/InfoLayanan";
 import MetodePembayaran from "../components/metodePembayaran/MetodePembayaran";
+import FaqCaraPemesanan from "../components/faqCaraPemesanan/FaqCaraPemesanan";
 
 const SITE_NAME = "Classic Bakery";
 
@@ -127,6 +128,7 @@ export default function CaraPemesananPage() {
       <StepByStep />
       <InfoLayanan />
       <MetodePembayaran />
+      <FaqCaraPemesanan />
     </main>
   );
 }
