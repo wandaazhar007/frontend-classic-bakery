@@ -120,7 +120,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link className={styles.link} href="/pengembalian-dana">
+                <Link className={styles.link} href="/refund">
                   Refund
                 </Link>
               </li>
