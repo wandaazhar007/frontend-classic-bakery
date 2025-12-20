@@ -4,6 +4,7 @@ import StepByStep from "../components/stepByStep/StepByStep";
 import InfoLayanan from "../components/infoLayanan/InfoLayanan";
 import MetodePembayaran from "../components/metodePembayaran/MetodePembayaran";
 import FaqCaraPemesanan from "../components/faqCaraPemesanan/FaqCaraPemesanan";
+import CtaCaraPemesanan from "../components/ctaCaraPemesanan/CtaCaraPemesanan";
 
 const SITE_NAME = "Classic Bakery";
 
@@ -129,6 +130,7 @@ export default function CaraPemesananPage() {
       <InfoLayanan />
       <MetodePembayaran />
       <FaqCaraPemesanan />
+      <CtaCaraPemesanan />
     </main>
   );
 }
