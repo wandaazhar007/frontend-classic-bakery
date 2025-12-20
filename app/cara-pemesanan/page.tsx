@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import StepByStep from "../components/stepByStep/StepByStep";
 
 const SITE_NAME = "Classic Bakery";
 
@@ -121,116 +122,7 @@ export default function CaraPemesananPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebPage) }}
       />
 
-      {/* HERO / INTRO (nanti bisa dipisah jadi component) */}
-      <section className="section" aria-labelledby="cara-pesan-title">
-        <div className="container">
-          <p
-            style={{
-              display: "inline-flex",
-              width: "fit-content",
-              padding: "0.8rem 1.1rem",
-              borderRadius: "999rem",
-              background: "rgba(255,255,255,0.82)",
-              border: "0.1rem solid rgba(240,230,255,1)",
-              boxShadow: "0 0.4rem 1.2rem rgba(0,0,0,0.06)",
-              fontWeight: 900,
-              letterSpacing: "0.08rem",
-            }}
-          >
-            Cara Pemesanan
-          </p>
-
-          <h1
-            id="cara-pesan-title"
-            style={{
-              marginTop: "1.2rem",
-              fontSize: "3.2rem",
-              lineHeight: 1.15,
-              fontWeight: 900,
-            }}
-          >
-            Order Bolu Jadul & Gift Bolu dalam 3 langkah simpel
-          </h1>
-
-          <p style={{ marginTop: "1.2rem", fontSize: "1.6rem", lineHeight: 1.9, maxWidth: "86rem" }}>
-            Classic Bakery menghadirkan <strong>bolu rumahan</strong> yang lembut, manisnya pas,
-            dan siap jadi <strong>gift bolu</strong>. Proses pesan dibuat mudah lewat WhatsApp,
-            khusus untuk area <strong>Mangkubumi, Tasikmalaya</strong>.
-          </p>
-
-          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginTop: "1.6rem" }}>
-            <a
-              href={WA_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Order via WhatsApp Classic Bakery"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "1.2rem 1.6rem",
-                borderRadius: "1.6rem",
-                fontWeight: 900,
-                border: "0.1rem solid rgba(240,230,255,1)",
-                background: "rgba(255,255,255,0.9)",
-              }}
-            >
-              Order via WhatsApp
-            </a>
-
-            <Link
-              href="/produk"
-              aria-label="Lihat produk Classic Bakery"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "1.2rem 1.6rem",
-                borderRadius: "1.6rem",
-                fontWeight: 900,
-                border: "0.1rem solid rgba(240,230,255,1)",
-                background: "rgba(255,255,255,0.9)",
-              }}
-            >
-              Lihat Produk
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION PLACEHOLDERS (akan dibuat terpisah seperti halaman Tentang Kami) */}
-      <section className="section" aria-label="Struktur section halaman Cara Pemesanan">
-        <div className="container">
-          <div style={{ maxWidth: "92rem", display: "grid", gap: "1rem" }}>
-            <h2 style={{ fontSize: "2.2rem", fontWeight: 900 }}>
-              Section yang akan kita isi selanjutnya
-            </h2>
-
-            <ul style={{ paddingLeft: "1.8rem", listStyle: "disc" }}>
-              <li style={{ fontSize: "1.5rem", lineHeight: 1.9 }}>
-                Step-by-step (Pilih produk → Chat WA → Bayar & ambil/antar)
-              </li>
-              <li style={{ fontSize: "1.5rem", lineHeight: 1.9 }}>
-                Info layanan: pickup & delivery (Mangkubumi radius 30 km)
-              </li>
-              <li style={{ fontSize: "1.5rem", lineHeight: 1.9 }}>
-                Metode pembayaran: cash / transfer / DANA / GoPay
-              </li>
-              <li style={{ fontSize: "1.5rem", lineHeight: 1.9 }}>
-                Ketentuan order: minimum 1, pre-order H-1
-              </li>
-              <li style={{ fontSize: "1.5rem", lineHeight: 1.9 }}>
-                FAQ Cara Pesan + CTA WhatsApp penutup
-              </li>
-            </ul>
-
-            <p style={{ marginTop: "0.8rem", fontSize: "1.4rem", lineHeight: 1.9 }}>
-              Catatan: Halaman ini memang sengaja disusun dengan beberapa section terpisah
-              (component) agar rapi, mudah dirawat, dan SEO-friendly.
-            </p>
-          </div>
-        </div>
-      </section>
+      <StepByStep />
     </main>
   );
 }
