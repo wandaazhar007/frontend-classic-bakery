@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import StepByStep from "../components/stepByStep/StepByStep";
+import InfoLayanan from "../components/infoLayanan/InfoLayanan";
 
 const SITE_NAME = "Classic Bakery";
 
@@ -123,6 +124,7 @@ export default function CaraPemesananPage() {
       />
 
       <StepByStep />
+      <InfoLayanan />
     </main>
   );
 }
