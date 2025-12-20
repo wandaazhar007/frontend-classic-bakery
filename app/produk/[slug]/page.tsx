@@ -9,12 +9,14 @@ type ProductImage = { url: string; isPrimary?: boolean };
 
 type Product = {
   id: string;
+  slug: string;
   name: string;
   shortDescription?: string;
   description?: string; // HTML from WYSIWYG
   price: number;
   images?: ProductImage[];
   category?: string;
+  isActive?: boolean;
 };
 
 type ProductResponse = {
@@ -90,10 +92,7 @@ function sanitizeRichHtml(input?: string) {
     // block javascript: links
     if (/^\s*javascript:/i.test(href)) href = "#";
 
-    // allow relative/https/http/wa.me
-    // (kalau selain itu, tetap biarkan sebagai href as-is, tapi bukan javascript)
     const safeHref = href;
-
     const safeTarget = target === "_self" ? "_self" : "_blank";
     const rel = safeTarget === "_blank" ? ' rel="noopener noreferrer"' : "";
 
@@ -101,11 +100,7 @@ function sanitizeRichHtml(input?: string) {
   });
 
   // Strip attributes from other tags: <p class="x"> -> <p>
-  // Keep closing tags as is.
-  html = html.replace(
-    /<(?!\/)(?!a\b)([a-z0-9]+)\s+[^>]*>/gi,
-    "<$1>"
-  );
+  html = html.replace(/<(?!\/)(?!a\b)([a-z0-9]+)\s+[^>]*>/gi, "<$1>");
 
   return html;
 }
@@ -120,12 +115,12 @@ function safeDescription(p: Product) {
   return text.length > 160 ? `${text.slice(0, 157)}...` : text;
 }
 
-async function getProduct(id: string): Promise<Product | null> {
+async function getProductBySlug(slug: string): Promise<Product | null> {
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
   if (!baseUrl) return null;
 
   try {
-    const res = await fetch(`${baseUrl}/api/products/${id}`, {
+    const res = await fetch(`${baseUrl}/api/products/slug/${encodeURIComponent(slug)}`, {
       next: { revalidate: 60 },
     });
     if (!res.ok) return null;
@@ -142,11 +137,11 @@ async function getProduct(id: string): Promise<Product | null> {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const { id } = await params;
+  const { slug } = await params;
 
-  const product = await getProduct(id);
+  const product = await getProductBySlug(slug);
   if (!product) {
     return {
       title: "Produk tidak ditemukan | Classic Bakery",
@@ -158,15 +153,16 @@ export async function generateMetadata({
   }
 
   const img = pickImage(product);
+  const canonicalPath = `/produk/${product.slug || slug}`;
 
   return {
     title: `${product.name} | Classic Bakery`,
     description: safeDescription(product),
-    alternates: { canonical: `/produk/${product.id}` },
+    alternates: { canonical: canonicalPath },
     openGraph: {
       title: `${product.name} | Classic Bakery`,
       description: safeDescription(product),
-      url: `${siteUrl}/produk/${product.id}`,
+      url: `${siteUrl}${canonicalPath}`,
       type: "website",
       images: [{ url: img, alt: product.name }],
     },
@@ -182,12 +178,14 @@ export async function generateMetadata({
 export default async function ProductDetailPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }) {
-  const { id } = await params;
+  const { slug } = await params;
 
-  const product = await getProduct(id);
+  const product = await getProductBySlug(slug);
   if (!product) return notFound();
+
+  const canonicalPath = `/produk/${product.slug || slug}`;
 
   const waText = encodeURIComponent(
     `Hallo, saya mau pesan produk ini (${product.name})`
@@ -213,7 +211,7 @@ export default async function ProductDetailPage({
             "@type": "ListItem",
             position: 3,
             name: product.name,
-            item: `${siteUrl}/produk/${product.id}`,
+            item: `${siteUrl}${canonicalPath}`,
           },
         ],
       },
@@ -230,7 +228,7 @@ export default async function ProductDetailPage({
           priceCurrency: "IDR",
           price: product.price,
           availability: "https://schema.org/InStock",
-          url: `${siteUrl}/produk/${product.id}`,
+          url: `${siteUrl}${canonicalPath}`,
         },
       },
     ],

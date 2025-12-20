@@ -7,6 +7,7 @@ type ProductImage = { url: string; isPrimary?: boolean };
 
 type Product = {
   id: string;
+  slug: string;
   name: string;
   shortDescription?: string;
   description?: string;
@@ -107,7 +108,7 @@ export default async function ProdukPage() {
           "@type": "ListItem",
           position: idx + 1,
           name: p.name,
-          url: `${siteUrl}/produk/${p.id}`,
+          url: `${siteUrl}/produk/${p.slug || p.id}`,
         })),
       },
     ],

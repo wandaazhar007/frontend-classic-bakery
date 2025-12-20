@@ -9,6 +9,7 @@ type ProductImage = { url: string; isPrimary?: boolean };
 
 type Product = {
   id: string;
+  slug: string;
   name: string;
   shortDescription?: string;
   description?: string;
@@ -115,7 +116,6 @@ export default function ProductsPageClient({
     try {
       const [res] = await Promise.all([
         fetch(url.toString(), { cache: "no-store" }),
-        // kasih jeda supaya skeleton "terlihat"
         delay(450),
       ]);
 
@@ -178,8 +178,6 @@ export default function ProductsPageClient({
 
   function onNext() {
     if (!canNext || isLoading || !nextCursor) return;
-
-    // Request next page using nextCursor; if sukses, push cursor itu ke stack
     loadProducts({ cursor: nextCursor, pushCursorToStack: nextCursor });
   }
 
@@ -236,7 +234,7 @@ export default function ProductsPageClient({
           {products.map((p) => (
             <Link
               key={p.id}
-              href={`/produk/${p.id}`}
+              href={`/produk/${p.slug || p.id}`}
               className={styles.card}
               role="listitem"
               aria-label={`Buka detail produk ${p.name}`}
@@ -259,7 +257,6 @@ export default function ProductsPageClient({
         </div>
       )}
 
-      {/* Pagination dipindahkan ke bawah card */}
       <div className={styles.paginationBottom} aria-label="Pagination produk">
         <button
           type="button"

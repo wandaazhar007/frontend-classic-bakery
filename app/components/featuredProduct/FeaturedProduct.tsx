@@ -9,6 +9,7 @@ type ProductImage = {
 
 type Product = {
   id: string;
+  slug?: string;
   name: string;
   shortDescription?: string;
   description?: string;
@@ -38,8 +39,13 @@ function formatIDR(value: number) {
 function getPrimaryImage(product: Product) {
   const images = product.images ?? [];
   const primary = images.find((img) => img.isPrimary)?.url ?? images[0]?.url;
-  // fallback aman kalau images kosong
   return primary || "/images/kue-bolu-2.png";
+}
+
+function getProductHref(product: Product) {
+  // SEO: pakai slug jika ada, fallback ke id (biar tetap aman)
+  const key = product.slug?.trim() || product.id;
+  return `/produk/${key}`;
 }
 
 export default async function FeaturedProduct() {
@@ -64,7 +70,6 @@ export default async function FeaturedProduct() {
 
   try {
     const res = await fetch(`${baseUrl}/api/products?limit=6`, {
-      // SEO-friendly: render server-side + tetap update berkala
       next: { revalidate: 60 },
     });
 
@@ -75,7 +80,7 @@ export default async function FeaturedProduct() {
       }
     }
   } catch {
-    // biarkan fallback UI
+    // fallback UI
   }
 
   return (
@@ -89,8 +94,8 @@ export default async function FeaturedProduct() {
           <p className={styles.subtitle}>
             Pesan untuk <strong>pickup</strong> atau <strong>delivery</strong>{" "}
             khusus area <strong>Mangkubumi</strong> (radius 30 km). Minimum order{" "}
-            <strong>1</strong>, estimasi <strong>pre-order H-1</strong>. Pembayaran
-            bisa <strong>cash</strong>, <strong>transfer</strong>,{" "}
+            <strong>1</strong>, estimasi <strong>pre-order H-1</strong>.
+            Pembayaran bisa <strong>cash</strong>, <strong>transfer</strong>,{" "}
             <strong>DANA</strong>, dan <strong>GoPay</strong>.
           </p>
 
@@ -110,11 +115,15 @@ export default async function FeaturedProduct() {
             </p>
           </div>
         ) : (
-          <div className={styles.grid} role="list" aria-label="Daftar produk unggulan">
+          <div
+            className={styles.grid}
+            role="list"
+            aria-label="Daftar produk unggulan"
+          >
             {products.map((p) => (
               <Link
                 key={p.id}
-                href={`/produk/${p.id}`}
+                href={getProductHref(p)}
                 className={styles.card}
                 role="listitem"
                 aria-label={`Lihat detail produk ${p.name}`}
