@@ -101,8 +101,8 @@ export default function HeroMain() {
           </p>
 
           <h1 id="hero-title" className={styles.title}>
-            Classic Bakery — <span>Bolu Jadul</span>, <span>Bolu Kukus</span>, &
-            <span> Premium Gift Bolu</span>
+            Classic Bakery — <span>Bolu Jadul,</span> <span>Bolu Kukus</span> &
+            <span className={styles.highlight}> Premium Gift Bolu</span>
           </h1>
 
           <p className={styles.subTitle}>

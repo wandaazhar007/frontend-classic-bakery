@@ -1,3 +1,10 @@
+/*
+Author: Wanda Azhar
+Location: Michigan, USA
+Contact: wandaazhar@gmail.com
+Description: Classic Bakery is a professionally designed website for a home-based bakery, created to showcase premium handcrafted baked goods with a modern, clean, and user-friendly interface. Built with responsive layouts and best practices, it reflects the brand’s quality, reliability, and professionalism.
+*/
+
 @use "../styles/variables" as v;
 @use "../styles/responsive" as r;
 
@@ -63,7 +70,7 @@
   color: v.$color-text-muted;
 
   strong {
-    color: v.$color-text-main;
+    color: v.$color-purpleText;
     font-weight: 900;
   }
 }
@@ -75,7 +82,7 @@
   max-width: 92rem;
 
   strong {
-    color: v.$color-text-main;
+    color: v.$color-purpleText;
     font-weight: 900;
   }
 }
@@ -143,7 +150,7 @@
   color: v.$color-text-muted;
 
   strong {
-    color: v.$color-text-main;
+    color: v.$color-purpleText;
     font-weight: 900;
   }
 }
@@ -163,7 +170,7 @@
     }
 
     strong {
-      color: v.$color-text-main;
+      color: v.$color-purpleText;
       font-weight: 900;
     }
 
@@ -192,7 +199,7 @@
   color: v.$color-text-muted;
 
   strong {
-    color: v.$color-text-main;
+    color: v.$color-purpleText;
     font-weight: 900;
   }
 }
